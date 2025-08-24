@@ -1,0 +1,168 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
+          
+      - name: Build project
+        run: |
+          cd frontend
+          npm run build
+          
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+        
+      - name: Deploy to Vercel
+        run: |
+          vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          
+      - name: Comment PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🚀 **Vercel 배포가 완료되었습니다!**\n\n배포된 URL: https://your-project.vercel.app\n\n변경사항이 반영되었는지 확인해보세요.'
+            })
+            
+  test:
+    runs-on: ubuntu-latest
+    needs: deploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
+          
+      - name: Run tests
+        run: |
+          cd frontend
+          npm test
+          
+      - name: Run linting
+        run: |
+          cd frontend
+          npm run lint
+          
+  lighthouse:
+    runs-on: ubuntu-latest
+    needs: deploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.12.x
+          
+      - name: Run Lighthouse CI
+        run: |
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+          
+  security:
+    runs-on: ubuntu-latest
+    needs: deploy
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Run security audit
+        run: |
+          cd frontend
+          npm audit --audit-level moderate
+          
+      - name: Run Snyk security scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+          
+  notify:
+    runs-on: ubuntu-latest
+    needs: [deploy, test, lighthouse, security]
+    if: always()
+    
+    steps:
+      - name: Notify deployment status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { deploy, test, lighthouse, security } = context.jobs;
+            
+            let status = '✅';
+            let message = '모든 작업이 성공적으로 완료되었습니다!';
+            
+            if (deploy.conclusion === 'failure') {
+              status = '❌';
+              message = '배포에 실패했습니다.';
+            } else if (test.conclusion === 'failure') {
+              status = '⚠️';
+              message = '테스트에 실패했습니다.';
+            } else if (lighthouse.conclusion === 'failure') {
+              status = '⚠️';
+              message = 'Lighthouse 검사에 실패했습니다.';
+            } else if (security.conclusion === 'failure') {
+              status = '⚠️';
+              message = '보안 검사에 실패했습니다.';
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `${status} **배포 상태**: ${message}\n\n- 배포: ${deploy.conclusion}
+              - 테스트: ${test.conclusion}
+              - Lighthouse: ${lighthouse.conclusion}
+              - 보안: ${security.conclusion}`
+            })

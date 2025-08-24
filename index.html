@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>오늘의 행운지수 🍀 - AI 기반 사주 운세 분석</title>
+    <meta name="description" content="사주를 기반으로 AI가 분석한 행운지수와 행운 강화법을 제공하는 웹 애플리케이션입니다.">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="./frontend/public/favicon.ico" type="image/x-icon">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="오늘의 행운지수 🍀">
+    <meta property="og:description" content="AI 기반 사주 운세 분석으로 나만의 행운 점수 확인">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-username.github.io/your-repo-name">
+    <meta property="og:image" content="./frontend/public/assets/og-image.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="오늘의 행운지수 🍀">
+    <meta name="twitter:description" content="AI 기반 사주 운세 분석으로 나만의 행운 점수 확인">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="./frontend/public/manifest.webmanifest">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="./frontend/src/styles/variables.css" as="style">
+    <link rel="preload" href="./frontend/src/styles/global.css" as="style">
+    
+    <!-- Critical CSS -->
+    <link rel="stylesheet" href="./frontend/src/styles/variables.css">
+    <link rel="stylesheet" href="./frontend/src/styles/global.css">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Critical inline styles for initial render */
+        :root {
+            --color-primary-50: #f0f9ff;
+            --color-primary-500: #3b82f6;
+            --color-primary-600: #2563eb;
+            --color-background-primary: #ffffff;
+            --color-text-primary: #1f2937;
+            --font-family-primary: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: var(--font-family-primary);
+            line-height: 1.6;
+            color: var(--color-text-primary);
+            background: linear-gradient(135deg, var(--color-primary-50) 0%, #f8fafc 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--color-primary-600) 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            color: #6b7280;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: var(--color-primary-500);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+        }
+        
+        .cta-button:hover {
+            background: var(--color-primary-600);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--color-text-primary);
+        }
+        
+        .feature-card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid #e5e7eb;
+            margin-top: 4rem;
+            color: #6b7280;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 2rem 0;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                padding: 2rem 0;
+            }
+            
+            .container {
+                padding: 0 12px;
+            }
+        }
+        
+        /* Loading animation */
+        .loading {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in forwards;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero loading">
+            <h1>🍀 오늘의 행운지수</h1>
+            <p>AI 기반 사주 운세 분석으로 나만의 행운 점수와 행운 강화법을 확인해보세요</p>
+            <a href="./frontend/public/landing.html" class="cta-button">행운지수 확인하기</a>
+        </section>
+        
+        <!-- Features Section -->
+        <section class="features">
+            <div class="feature-card loading">
+                <div class="feature-icon">🤖</div>
+                <h3>AI 기반 분석</h3>
+                <p>OpenAI GPT 모델을 활용한 정확한 사주 분석과 행운지수 계산</p>
+            </div>
+            
+            <div class="feature-card loading">
+                <div class="feature-icon">📱</div>
+                <h3>반응형 디자인</h3>
+                <p>모든 디바이스에서 최적화된 사용자 경험 제공</p>
+            </div>
+            
+            <div class="feature-card loading">
+                <div class="feature-icon">🎯</div>
+                <h3>맞춤형 조언</h3>
+                <p>개인별 생년월일, 시간, 성별을 고려한 구체적인 행운 강화법</p>
+            </div>
+        </section>
+        
+        <!-- Quick Access Section -->
+        <section class="features">
+            <div class="feature-card loading">
+                <div class="feature-icon">🚀</div>
+                <h3>빠른 시작</h3>
+                <p><a href="./frontend/public/landing.html" style="color: var(--color-primary-500); text-decoration: none;">랜딩 페이지</a>에서 바로 시작하세요</p>
+            </div>
+            
+            <div class="feature-card loading">
+                <div class="feature-icon">📊</div>
+                <h3>결과 확인</h3>
+                <p><a href="./frontend/public/result.html" style="color: var(--color-primary-500); text-decoration: none;">결과 페이지</a>에서 상세 분석 확인</p>
+            </div>
+            
+            <div class="feature-card loading">
+                <div class="feature-icon">🔗</div>
+                <h3>공유하기</h3>
+                <p><a href="./frontend/public/share-card.html" style="color: var(--color-primary-500); text-decoration: none;">공유 카드</a>로 친구에게 전달</p>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 오늘의 행운지수. All rights reserved.</p>
+            <p><a href="./frontend/public/about.html" style="color: var(--color-primary-500); text-decoration: none;">개인정보처리방침</a></p>
+        </div>
+    </footer>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./frontend/public/service-worker.js')
+                    .then(registration => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch(registrationError => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+        
+        // Staggered loading animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingElements = document.querySelectorAll('.loading');
+            loadingElements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.animationDelay = `${index * 0.1}s`;
+                }, 100);
+            });
+        });
+        
+        // Health check
+        fetch('./api/health')
+            .then(response => response.json())
+            .then(data => {
+                console.log('API Health Check:', data);
+            })
+            .catch(error => {
+                console.log('API Health Check failed:', error);
+            });
+    </script>
+</body>
+</html>
