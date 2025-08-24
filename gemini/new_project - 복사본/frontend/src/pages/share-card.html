@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공유 카드 - 민지님의 오늘의 행운지수</title>
+    <meta name="description" content="민지님의 오늘의 행운지수를 예쁜 카드로 만들어 친구들과 공유해보세요.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="../../styles/variables.css">
+    <link rel="stylesheet" href="../../styles/global.css">
+    
+    <style>
+        /* Share Card Page Specific Styles */
+        .share-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-background-secondary) 100%);
+            font-family: var(--font-family-primary);
+        }
+
+        .share-header {
+            background: var(--color-background-primary);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: var(--spacing-md) var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary-600);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .logo-icon {
+            font-size: var(--font-size-lg);
+        }
+
+        .back-button {
+            background: transparent;
+            color: var(--color-primary-500);
+            border: 2px solid var(--color-primary-500);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        .back-button:hover {
+            background: var(--color-primary-50);
+            border-color: var(--color-primary-600);
+        }
+
+        .share-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: var(--spacing-2xl) var(--spacing-lg);
+        }
+
+        .share-title {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-3xl) / 2);
+        }
+
+        .share-title h1 {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .share-title p {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: var(--line-height-relaxed);
+        }
+
+        .card-preview-section {
+            /* 모든 스타일 제거 */
+        }
+
+        .preview-title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .preview-description {
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-2xl);
+            line-height: var(--line-height-relaxed);
+        }
+
+        .card-container {
+            width: 100%;
+            max-width: 100vw;
+            min-width: 0;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            margin-bottom: var(--spacing-2xl);
+            box-sizing: border-box;
+            overflow: visible;
+        }
+        .share-card {
+            width: 100%;
+            max-width: 400px;
+            min-width: 0;
+            box-sizing: border-box;
+            padding: var(--spacing-2xl);
+            border-radius: var(--border-radius-2xl);
+            display: flex;
+            flex-direction: column;
+            overflow: visible !important;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .share-card::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .card-logo {
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .card-date {
+            font-size: var(--font-size-xs);
+            opacity: 0.9;
+        }
+
+        .card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            padding: var(--spacing-sm) 0;
+        }
+
+        .card-score {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--spacing-sm);
+            text-align: center;
+        }
+
+        .card-score-label {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .card-message {
+            font-size: clamp(13px, 16px, 2vw);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-md);
+            line-height: var(--line-height-relaxed);
+            word-break: keep-all;
+            white-space: normal;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+
+        .card-recommendations {
+            font-size: var(--font-size-sm);
+            opacity: 0.9;
+            line-height: var(--line-height-relaxed);
+        }
+
+        .features-section {
+            background: var(--color-background-primary);
+            border-radius: var(--border-radius-2xl);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .features-title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--color-background-secondary);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--color-neutral-100);
+        }
+
+        .feature-icon {
+            font-size: var(--font-size-2xl);
+            color: var(--color-primary-500);
+        }
+
+        .feature-text {
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+            line-height: var(--line-height-relaxed);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .action-button {
+            padding: var(--spacing-lg) var(--spacing-2xl);
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            border: none;
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .primary-button {
+            background: var(--color-primary-500);
+            color: var(--color-text-inverse);
+        }
+
+        .primary-button:hover {
+            background: var(--color-primary-600);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--color-primary-500);
+            border: 2px solid var(--color-primary-500);
+        }
+
+        .secondary-button:hover {
+            background: var(--color-primary-50);
+            border-color: var(--color-primary-600);
+        }
+
+        .snackbar {
+            position: fixed;
+            bottom: var(--spacing-2xl);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--color-neutral-800);
+            color: var(--color-text-inverse);
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-base);
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+            z-index: 1000;
+        }
+
+        .snackbar.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .share-title h1 {
+                font-size: var(--font-size-3xl);
+            }
+
+            .share-card {
+                width: 300px;
+                height: 450px;
+            }
+
+            .card-score {
+                font-size: var(--font-size-5xl);
+            }
+
+            .features-list {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .action-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .share-container {
+                padding: var(--spacing-xl) var(--spacing-md);
+            }
+
+            .card-preview-section,
+            .features-section {
+                padding: var(--spacing-lg);
+            }
+
+            .share-card {
+                max-width: 100vw;
+                padding: var(--spacing-lg);
+                font-size: 15px;
+            }
+            .card-title, .card-score-main, .card-message, .card-date-badge {
+                font-size: 1em;
+                word-break: break-all;
+            }
+        }
+        /* Footer (from landing.html) */
+        .footer {
+            background: var(--color-background-primary);
+            border-top: 1px solid var(--color-neutral-200);
+            padding: var(--spacing-xl) 0;
+            margin-top: var(--spacing-4xl);
+        }
+
+        .footer-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .footer-link {
+            color: var(--color-primary-500);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: normal;
+            transition: var(--transition-normal);
+        }
+
+        .footer-link:hover {
+            color: var(--color-primary-600);
+        }
+
+        .footer-text {
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        /* Add/replace CSS for new card design */
+        .card-date-badge {
+            display: inline-block;
+            background: #e0f7e9;
+            color: #2e7d32;
+            border-radius: 16px;
+            padding: 4px 18px;
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0 auto 18px auto;
+        }
+        .card-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 10px;
+        }
+        .card-score-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .clover-score-icon {
+            font-size: 32px;
+            color: #43b36a;
+        }
+        .card-score-main {
+            font-size: 38px;
+            font-weight: 900;
+            color: #111;
+        }
+        .card-message {
+            color: #555;
+            font-size: clamp(13px, 16px, 2vw);
+            margin-bottom: 22px;
+            text-align: center;
+            line-height: 1.4;
+            word-break: keep-all;
+            white-space: normal;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+        .card-luck-section {
+            margin-top: 18px;
+        }
+        .luck-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .luck-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #222;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .luck-icon {
+            font-size: 18px;
+        }
+        .luck-divider::before,
+        .luck-divider::after {
+            content: '';
+            flex: 1;
+            height: 1.5px;
+            background: #e0e0e0;
+            border-radius: 1px;
+        }
+        .luck-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 4px;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+        .luck-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+        .luck-item-icon {
+            font-size: 22px;
+        }
+        @media (max-width: 900px) {
+            .share-card {
+                max-width: 95vw;
+                padding: var(--spacing-xl);
+                font-size: 16px;
+            }
+        }
+        @media (max-width: 600px) {
+            .share-card {
+                max-width: 100vw;
+                padding: var(--spacing-lg);
+                font-size: 15px;
+            }
+            .card-title, .card-score-main, .card-message, .card-date-badge {
+                font-size: 1em;
+                word-break: break-all;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="share-page">
+        <!-- Header -->
+        <header class="share-header">
+            <div class="header-container">
+                <a href="landing.html" class="logo">
+                    <span class="logo-icon">🍀</span>
+                    오늘의 행운지수
+                </a>
+                <button class="back-button" onclick="goBack()">이전으로</button>
+            </div>
+        </header>
+
+        <!-- Share Container -->
+        <div class="share-container">
+            <!-- Share Title -->
+            <div class="share-title">
+                <h1 id="shareTitleName">민지님의 오늘의 행운지수를 카드로 만들었어요!</h1>
+                <p>
+                    오늘의 점수와 행운 강화법이 담긴 나만의 카드예요.<br>
+                    친구들과 나눠보면 서로의 운도 더 좋아질지 몰라요 :)
+                </p>
+            </div>
+
+            <!-- Card Preview Section -->
+            <div class="card-preview-section">
+                <h2 class="preview-title" id="previewTitle">카드 미리보기</h2>
+                
+                <div class="card-container">
+                    <div class="share-card" id="shareCard">
+                        <div class="card-date-badge">2024년 8월 27일</div>
+                        <div class="card-title" id="cardTitleName">민지님의 행운점수는?</div>
+                        <div class="card-score-row">
+                            <span class="clover-score-icon">🍀</span>
+                            <span class="card-score-main">100점</span>
+                        </div>
+                            <div class="card-message">
+                            마음이 편안하고 관계가 좋아지는 날이에요. 중요한 일은 오전에 처리해보세요!
+                        </div>
+                        <div class="card-luck-section">
+                            <div class="luck-divider">
+                                <span class="luck-title"><span class="luck-icon">💪</span> 행운 강화법</span>
+                            </div>
+                            <div class="luck-list">
+                                <div class="luck-item"><span class="luck-item-icon">👚</span> 초록색 셔츠나 아우터</div>
+                                <div class="luck-item"><span class="luck-item-icon">🍱</span> 미역국, 시금치 나물</div>
+                                <div class="luck-item"><span class="luck-item-icon">🏃</span> 산책, 식물에 물주기</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-button primary-button" onclick="saveImage()">
+                    💾 이미지로 저장하기
+                </button>
+                <button class="action-button secondary-button" onclick="shareToSNS()">
+                    📱 SNS에 공유하기
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-links">
+                    <a href="about.html" class="footer-link">개인정보처리방침</a>
+                </div>
+                <div class="footer-text">Copyright © 2025 오늘의 행운지수. All rights reserved.</div>
+            </div>
+        </footer>
+
+        <!-- Snackbar -->
+        <div class="snackbar" id="snackbar"></div>
+    </div>
+
+    <script>
+        // Load form data from localStorage
+        const formData = JSON.parse(localStorage.getItem('luckFormData') || '{}');
+        
+        // Update card content with user's name
+        if (formData.name) {
+            // 요약: 마음이 안정되고 관계가 부드러운 날, 중요한 일은 오전에!
+            document.querySelector('.card-message').textContent = 
+                '마음이 편안하고 관계가 좋아지는 날이에요. 중요한 일은 오전에 처리해보세요!';
+        }
+
+        // Dynamically update cardName with user's name
+        if (formData.name) {
+            const cardName = document.getElementById('cardName');
+            if (cardName) {
+                cardName.textContent = `${formData.name}님의`;
+            }
+        }
+
+        // Update share title with user's name
+        if (formData.name) {
+            const shareTitleName = document.getElementById('shareTitleName');
+            if (shareTitleName) {
+                shareTitleName.innerHTML = `${formData.name}님의 오늘의 행운지수를 카드로 만들었어요!`;
+            }
+        }
+
+        // Update card title with user's name
+        if (formData.name) {
+            const cardTitleName = document.getElementById('cardTitleName');
+            if (cardTitleName) {
+                cardTitleName.textContent = `${formData.name}님의 행운점수는?`;
+            }
+        }
+
+        // Remove dynamic name logic for previewTitle
+
+        // Save image functionality
+        function saveImage() {
+            // In a real implementation, this would use html2canvas or similar library
+            // For now, we'll simulate the save functionality
+            showSnackbar('오늘의 행운지수를 저장했어요.');
+            
+            // Simulate download
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.download = '오늘의_행운지수_카드.png';
+                link.href = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
+                link.click();
+            }, 1000);
+        }
+
+        // Share to SNS functionality
+        function shareToSNS() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '오늘의 행운지수',
+                    text: `${formData.name || '나'}의 오늘 행운지수는 87점입니다!`,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const url = window.location.href;
+                const text = `${formData.name || '나'}의 오늘 행운지수는 87점입니다!`;
+                
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
+                        showSnackbar('URL을 복사했어요.');
+                    });
+                } else {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = `${text}\n${url}`;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showSnackbar('URL을 복사했어요.');
+                }
+            }
+        }
+
+        // Show snackbar
+        function showSnackbar(message) {
+            const snackbar = document.getElementById('snackbar');
+            snackbar.textContent = message;
+            snackbar.classList.add('show');
+            
+            setTimeout(() => {
+                snackbar.classList.remove('show');
+            }, 3000);
+        }
+
+        // Go back function
+        function goBack() {
+            window.location.href = 'result.html';
+        }
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                goBack();
+            }
+        });
+
+        // Add card hover effect
+        const shareCard = document.getElementById('shareCard');
+        shareCard.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.02)';
+        });
+        
+        shareCard.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    </script>
+</body>
+</html> 

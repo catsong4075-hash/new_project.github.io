@@ -1,0 +1,33 @@
+.card {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: var(--spacing-sm);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.item {
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: var(--spacing-sm);
+}
+
+.reason {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .card {
+    background-color: #3a3a3a;
+    border-color: #555;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .reason {
+    color: #bbb;
+  }
+}

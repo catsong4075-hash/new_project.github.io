@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 행운지수 - 랜딩 페이지</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 색상 시스템 */
+            --color-primary-50: #fef7ed;
+            --color-primary-100: #fdedd4;
+            --color-primary-200: #fbd7a9;
+            --color-primary-300: #f8bc72;
+            --color-primary-400: #f59a3a;
+            --color-primary-500: #f37a1a;
+            --color-primary-600: #e45f0f;
+            --color-primary-700: #bd4a0f;
+            --color-primary-800: #963b14;
+            --color-primary-900: #7a3214;
+            
+            --color-secondary-50: #f0f9ff;
+            --color-secondary-100: #e0f2fe;
+            --color-secondary-200: #bae6fd;
+            --color-secondary-300: #7dd3fc;
+            --color-secondary-400: #38bdf8;
+            --color-secondary-500: #0ea5e9;
+            --color-secondary-600: #0284c7;
+            --color-secondary-700: #0369a1;
+            --color-secondary-800: #075985;
+            --color-secondary-900: #0c4a6e;
+            
+            --color-neutral-50: #fafafa;
+            --color-neutral-100: #f5f5f5;
+            --color-neutral-200: #e5e5e5;
+            --color-neutral-300: #d4d4d4;
+            --color-neutral-400: #a3a3a3;
+            --color-neutral-500: #737373;
+            --color-neutral-600: #525252;
+            --color-neutral-700: #404040;
+            --color-neutral-800: #262626;
+            --color-neutral-900: #171717;
+            
+            --color-background-primary: #ffffff;
+            --color-background-secondary: #f8fafc;
+            --color-background-tertiary: #f1f5f9;
+            
+            --color-text-primary: #1e293b;
+            --color-text-secondary: #475569;
+            --color-text-tertiary: #64748b;
+            --color-text-inverse: #ffffff;
+            
+            /* 타이포그래피 */
+            --font-family-primary: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-family-secondary: 'Noto Sans KR', sans-serif;
+            
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+            --font-size-6xl: 3.75rem;
+            
+            --font-weight-light: 300;
+            --font-weight-normal: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+            --font-weight-extrabold: 800;
+            
+            --line-height-tight: 1.25;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.75;
+            
+            /* 간격 */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --spacing-3xl: 4rem;
+            --spacing-4xl: 6rem;
+            
+            /* 그림자 */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            /* 테두리 반경 */
+            --border-radius-sm: 0.25rem;
+            --border-radius-md: 0.5rem;
+            --border-radius-lg: 0.75rem;
+            --border-radius-xl: 1rem;
+            --border-radius-2xl: 1.5rem;
+            
+            /* 레이아웃 */
+            --layout-container-maxWidth: 1200px;
+            --layout-container-padding: 0 var(--spacing-lg);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family-primary);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-normal);
+            color: var(--color-text-primary);
+            background-color: var(--color-background-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: var(--layout-container-maxWidth);
+            margin: 0 auto;
+            padding: 0 var(--layout-container-padding);
+        }
+
+        .main-content {
+            min-height: calc(100vh - 200px);
+            padding: var(--spacing-xl) 0;
+        }
+
+        /* 랜딩 페이지 스타일 */
+        .landing-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--color-background-primary) 0%, var(--color-background-secondary) 100%);
+        }
+
+        .hero-section {
+            padding: var(--spacing-4xl) 0 var(--spacing-3xl);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .hero-title {
+            font-size: var(--font-size-5xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-xl);
+            line-height: var(--line-height-tight);
+            background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: var(--font-size-xl);
+            color: var(--color-text-secondary);
+            line-height: var(--line-height-relaxed);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .hero-image {
+            margin-top: var(--spacing-3xl);
+            position: relative;
+        }
+
+        .hero-visual {
+            display: inline-block;
+            position: relative;
+        }
+
+        .hero-icon {
+            font-size: 8rem;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(243, 122, 26, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .form-section {
+            padding: var(--spacing-3xl) 0;
+            background: var(--color-background-primary);
+            border-radius: var(--border-radius-2xl) var(--border-radius-2xl) 0 0;
+            margin-top: var(--spacing-3xl);
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .form-intro {
+            text-align: center;
+            margin-bottom: var(--spacing-3xl);
+        }
+
+        .form-title {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .form-description {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-secondary);
+            line-height: var(--line-height-relaxed);
+        }
+
+        .luck-form {
+            background: var(--color-background-primary);
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-2xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--color-neutral-100);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .form-group label {
+            display: block;
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--border-radius-md);
+            font-size: var(--font-size-base);
+            transition: border-color 0.2s ease-in-out;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-primary-500);
+            box-shadow: 0 0 0 3px var(--color-primary-100);
+        }
+
+        .time-input-container {
+            position: relative;
+        }
+
+        .unknown-time-checkbox {
+            margin-top: var(--spacing-md);
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .checkbox-input {
+            display: none;
+        }
+
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-neutral-300);
+            border-radius: var(--border-radius-sm);
+            margin-right: var(--spacing-sm);
+            position: relative;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .checkbox-input:checked + .checkbox-custom {
+            background: var(--color-primary-500);
+            border-color: var(--color-primary-500);
+        }
+
+        .checkbox-input:checked + .checkbox-custom::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-text {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+        }
+
+        .form-actions {
+            margin-top: var(--spacing-2xl);
+            text-align: center;
+        }
+
+        .submit-button {
+            width: 100%;
+            max-width: 400px;
+            height: 56px;
+            background: var(--color-primary-500);
+            color: var(--color-text-inverse);
+            border: none;
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .submit-button:hover {
+            background: var(--color-primary-600);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .submit-button:disabled {
+            background: var(--color-neutral-300);
+            color: var(--color-neutral-500);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .info-section {
+            padding: var(--spacing-4xl) 0;
+            background: var(--color-background-secondary);
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+        }
+
+        .info-card {
+            background: var(--color-background-primary);
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-2xl);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--color-neutral-100);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-lg);
+            display: block;
+        }
+
+        .card-title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .card-description {
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+            line-height: var(--line-height-relaxed);
+        }
+
+        /* 헤더 스타일 */
+        .header {
+            background: var(--color-background-primary);
+            border-bottom: 1px solid var(--color-neutral-200);
+            padding: var(--spacing-lg) 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary-500);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: var(--spacing-lg);
+        }
+
+        .nav-link {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-weight: var(--font-weight-medium);
+            transition: color 0.2s ease-in-out;
+        }
+
+        .nav-link:hover {
+            color: var(--color-primary-500);
+        }
+
+        /* 푸터 스타일 */
+        .footer {
+            background: var(--color-background-primary);
+            border-top: 1px solid var(--color-neutral-200);
+            padding: var(--spacing-xl) 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: var(--font-size-4xl);
+            }
+            
+            .hero-subtitle {
+                font-size: var(--font-size-lg);
+            }
+            
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: var(--font-size-3xl);
+            }
+            
+            .luck-form {
+                padding: var(--spacing-xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-page">
+        <!-- 헤더 -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">🍀 오늘의 행운지수</div>
+                    <nav class="nav-links">
+                        <a href="about.html" class="nav-link">소개</a>
+                        <a href="kiro-test.html" class="nav-link">테스트</a>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <div class="container">
+                <!-- 히어로 섹션 -->
+                <section class="hero-section">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            오늘, 나의 행운지수는 몇 점일까?
+                        </h1>
+                        <p class="hero-subtitle">
+                            사주를 기반으로 나만의 행운 점수와 행운 강화법을 알려드려요.<br>
+                            매일 1분, 나를 위한 재미있는 루틴을 만들어보세요.
+                        </p>
+                    </div>
+                    <div class="hero-image">
+                        <div class="hero-visual">
+                            <span class="hero-icon">🍀</span>
+                            <div class="hero-glow"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 입력 폼 섹션 -->
+                <section class="form-section">
+                    <div class="form-container">
+                        <div class="form-intro">
+                            <h2 class="form-title">나의 정보를 입력해주세요</h2>
+                            <p class="form-description">
+                                정확한 생년월일과 시간은 나의 사주 해석에 꼭 필요해요.<br>
+                                태어난 시간을 모를 경우 '모름'에 체크해주세요.
+                            </p>
+                        </div>
+
+                        <form id="luckForm" class="luck-form">
+                            <div class="form-group">
+                                <label for="name">이름</label>
+                                <input 
+                                    type="text" 
+                                    id="name" 
+                                    name="name" 
+                                    placeholder="이름을 입력해주세요" 
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="birthDate">생년월일</label>
+                                <input 
+                                    type="date" 
+                                    id="birthDate" 
+                                    name="birthDate" 
+                                    required
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <div class="time-input-container">
+                                    <label for="birthTime">태어난 시간</label>
+                                    <input 
+                                        type="time" 
+                                        id="birthTime" 
+                                        name="birthTime" 
+                                        placeholder="태어난 시간을 선택해주세요"
+                                    >
+                                    <div class="unknown-time-checkbox">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="unknownTime" class="checkbox-input">
+                                            <span class="checkbox-custom"></span>
+                                            <span class="checkbox-text">태어난 시간을 모름</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="submit-button" id="submitBtn">
+                                    오늘의 행운지수 확인하기
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 추가 정보 섹션 -->
+                <section class="info-section">
+                    <div class="info-cards">
+                        <div class="info-card">
+                            <div class="card-icon">🎯</div>
+                            <h3 class="card-title">정확한 분석</h3>
+                            <p class="card-description">
+                                사주 기반으로 정확한 행운지수를 계산해드려요
+                            </p>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="card-icon">💡</div>
+                            <h3 class="card-title">실천 가능한 조언</h3>
+                            <p class="card-description">
+                                오늘 바로 실천할 수 있는 행운 강화법을 제안해드려요
+                            </p>
+                        </div>
+                        
+                        <div class="info-card">
+                            <div class="card-icon">📱</div>
+                            <h3 class="card-title">공유하기 쉬워요</h3>
+                            <p class="card-description">
+                                예쁜 카드로 만들어 친구들과 함께 나눠보세요
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        
+        <!-- 푸터 -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-content">
+                    <p>&copy; 2024 오늘의 행운지수. 모든 권리 보유.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 폼 제출 처리
+        document.getElementById('luckForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                birthDate: document.getElementById('birthDate').value,
+                birthTime: document.getElementById('birthTime').value,
+                unknownTime: document.getElementById('unknownTime').checked
+            };
+            
+            // 간단한 유효성 검사
+            if (!formData.name || !formData.birthDate) {
+                alert('이름과 생년월일을 입력해주세요.');
+                return;
+            }
+            
+            // 로딩 상태 표시
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="loading-content"><span class="loading-spinner"></span>계산 중...</span>';
+            submitBtn.disabled = true;
+            
+            // 시뮬레이션된 API 호출
+            setTimeout(() => {
+                // 결과 페이지로 이동 (실제로는 API 응답 후 이동)
+                window.location.href = 'result.html';
+            }, 2000);
+        });
+        
+        // 체크박스 처리
+        document.getElementById('unknownTime').addEventListener('change', function(e) {
+            const birthTimeInput = document.getElementById('birthTime');
+            birthTimeInput.disabled = e.target.checked;
+            if (e.target.checked) {
+                birthTimeInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html> 

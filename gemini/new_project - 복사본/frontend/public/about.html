@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 행운지수 - 서비스 소개</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .about-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-menu a:hover {
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Page Title Section */
+        .page-title-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            margin: 0 2rem 4rem 2rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        /* Brand Introduction Section */
+        .brand-introduction-section {
+            margin-bottom: 4rem;
+        }
+
+        .brand-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .brand-philosophy {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .philosophy-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .philosophy-text {
+            font-size: 1.2rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .brand-description {
+            text-align: center;
+        }
+
+        .description-text {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Features Section */
+        .features-section {
+            margin-bottom: 4rem;
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Service Features Section */
+        .service-features-section {
+            margin-bottom: 4rem;
+        }
+
+        .service-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 3rem;
+        }
+
+        .service-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-feature {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .feature-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .feature-name {
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .feature-detail {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* How to Use Section */
+        .how-to-use-section {
+            margin-bottom: 4rem;
+        }
+
+        .how-to-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 3rem;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .step-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem auto;
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .step-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Closing Message Section */
+        .closing-message-section {
+            margin-bottom: 4rem;
+        }
+
+        .closing-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .closing-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .closing-description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            margin-bottom: 4rem;
+        }
+
+        .cta-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .cta-description {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .start-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .start-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            padding: 2rem 0;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .footer-text {
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-features {
+                grid-template-columns: 1fr;
+            }
+
+            .steps-container {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="about-page">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">오늘의 행운지수</div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="index.html">홈</a></li>
+                        <li><a href="about.html">소개</a></li>
+                        <li><a href="result.html">결과</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        
+        <main class="main-content">
+            <div class="container">
+                <!-- 페이지 타이틀 섹션 -->
+                <section class="page-title-section">
+                    <h1 class="page-title">
+                        운 좋은 하루, 오늘의 행운지수에 오신 걸 환영해요!
+                    </h1>
+                </section>
+
+                <!-- 브랜드 소개 섹션 -->
+                <section class="brand-introduction-section">
+                    <div class="brand-content">
+                        <div class="brand-philosophy">
+                            <h2 class="philosophy-title">우리는 이렇게 생각해요</h2>
+                            <p class="philosophy-text">
+                                "운세는 점괘가 아니라, 오늘을 잘 살아내는 작은 루틴이에요."
+                            </p>
+                        </div>
+                        
+                        <div class="brand-description">
+                            <p class="description-text">
+                                오늘의 행운지수는, 당신의 사주와 오늘의 기운을 바탕으로
+                                지금 필요한 기운을 채워주는 실천법을 제안해요.
+                            </p>
+                            <p class="description-text">
+                                매일 1분이면, 나를 돌보는 습관이 생겨요.
+                                당신의 하루에 작은 '행운'을 더해보세요.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 기능 설명 섹션 -->
+                <section class="features-section">
+                    <h2 class="features-title">주요 기능</h2>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🌟</div>
+                            <h3 class="feature-title">운세 점수 제공</h3>
+                            <p class="feature-description">
+                                오늘의 사주 기운을 100점 만점으로 시각화해요.
+                            </p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🎯</div>
+                            <h3 class="feature-title">실천 가능한 개운법 추천</h3>
+                            <p class="feature-description">
+                                오늘의 부족한 기운을 색상, 음식, 활동으로 보완해요.
+                            </p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">📲</div>
+                            <h3 class="feature-title">감성 카드로 공유</h3>
+                            <p class="feature-description">
+                                친구들과 함께 운을 나누고, 오늘을 기록하세요.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 서비스 특징 섹션 -->
+                <section class="service-features-section">
+                    <h2 class="service-title">서비스 특징</h2>
+                    
+                    <div class="service-features">
+                        <div class="service-feature">
+                            <div class="feature-header">
+                                <span class="feature-number">01</span>
+                                <h3 class="feature-name">정확한 사주 분석</h3>
+                            </div>
+                            <p class="feature-detail">
+                                전통 사주 이론을 바탕으로 정확하고 신뢰할 수 있는 분석을 제공합니다.
+                            </p>
+                        </div>
+                        
+                        <div class="service-feature">
+                            <div class="feature-header">
+                                <span class="feature-number">02</span>
+                                <h3 class="feature-name">실천 가능한 조언</h3>
+                            </div>
+                            <p class="feature-detail">
+                                오늘 바로 실천할 수 있는 구체적이고 실용적인 행운 강화법을 제안합니다.
+                            </p>
+                        </div>
+                        
+                        <div class="service-feature">
+                            <div class="feature-header">
+                                <span class="feature-number">03</span>
+                                <h3 class="feature-name">감성적인 경험</h3>
+                            </div>
+                            <p class="feature-detail">
+                                따뜻하고 친근한 톤으로 일상에 작은 행운을 더해드립니다.
+                            </p>
+                        </div>
+                        
+                        <div class="service-feature">
+                            <div class="feature-header">
+                                <span class="feature-number">04</span>
+                                <h3 class="feature-name">편리한 공유</h3>
+                            </div>
+                            <p class="feature-detail">
+                                예쁜 카드로 만들어 친구들과 함께 행운을 나눌 수 있습니다.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 사용 방법 섹션 -->
+                <section class="how-to-use-section">
+                    <h2 class="how-to-title">사용 방법</h2>
+                    
+                    <div class="steps-container">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3 class="step-title">정보 입력</h3>
+                                <p class="step-description">
+                                    이름, 생년월일, 태어난 시간을 입력해주세요.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3 class="step-title">행운지수 확인</h3>
+                                <p class="step-description">
+                                    오늘의 행운지수와 상세한 운세를 확인해보세요.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3 class="step-title">행운 강화법 실천</h3>
+                                <p class="step-description">
+                                    추천받은 의상, 음식, 활동을 실천해보세요.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h3 class="step-title">결과 공유</h3>
+                                <p class="step-description">
+                                    예쁜 카드로 만들어 친구들과 공유해보세요.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 마무리 메시지 섹션 -->
+                <section class="closing-message-section">
+                    <div class="closing-content">
+                        <h2 class="closing-title">오늘도 당신에게 좋은 기운이 함께하길 바랄게요.</h2>
+                        <p class="closing-description">
+                            매일 1분, 나를 돌보는 습관으로 작은 행운을 만들어보세요.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- CTA 섹션 -->
+                <section class="cta-section">
+                    <div class="cta-content">
+                        <h2 class="cta-title">지금 바로 시작해보세요</h2>
+                        <p class="cta-description">
+                            오늘의 행운지수를 확인하고 나만의 행운 루틴을 만들어보세요.
+                        </p>
+                        <div class="cta-buttons">
+                            <a href="index.html" class="start-button">
+                                행운지수 확인하기
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p class="footer-text">© 2024 오늘의 행운지수. 모든 권리 보유.</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html> 

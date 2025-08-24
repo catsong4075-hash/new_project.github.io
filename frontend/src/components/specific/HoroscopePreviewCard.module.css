@@ -1,0 +1,35 @@
+.card {
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  border: 1px solid #ddd;
+  border-radius: var(--spacing-md);
+  background-color: #fff;
+  width: 100%;
+  max-width: 400px;
+  text-align: left;
+}
+
+.title {
+  margin-top: 0;
+  color: var(--primary-color);
+}
+
+.content {
+  line-height: 1.6;
+}
+
+.features {
+  list-style-type: '✨';
+  padding-left: 1.5rem;
+}
+
+.features li {
+  margin-bottom: var(--spacing-sm);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card {
+    background-color: #2d2d2d;
+    border-color: #444;
+  }
+}

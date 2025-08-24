@@ -1,0 +1,39 @@
+/* src/styles/global.css */
+@import './variables.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  line-height: 1.5;
+  font-weight: 400;
+  min-height: 100vh;
+
+  color: var(--text-color-light);
+  background-color: var(--background-color-light);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+  text-align: center;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  body {
+    color: var(--text-color-dark);
+    background-color: var(--background-color-dark);
+  }
+}

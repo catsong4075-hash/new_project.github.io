@@ -1,0 +1,35 @@
+.inputGroup {
+  margin-bottom: var(--spacing-md);
+  text-align: left;
+  width: 100%;
+}
+
+.label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: var(--spacing-xs);
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.errorInput {
+  border-color: #e53e3e; /* A red color for errors */
+}
+
+.errorMessage {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: var(--spacing-sm);
+}

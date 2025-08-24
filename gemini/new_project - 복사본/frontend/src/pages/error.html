@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오류 발생 - 오늘의 행운지수</title>
+    <meta name="description" content="연결 오류가 발생했습니다. 다시 시도해 주세요.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="../../styles/variables.css">
+    <link rel="stylesheet" href="../../styles/global.css">
+    
+    <style>
+        /* Error Page Specific Styles */
+        .error-container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            /* 디자인 요소 제거: padding, background, border, border-radius, box-shadow 등 */
+            padding: 0;
+            background: none;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .error-card {
+            background: none;
+            border-radius: 0;
+            padding: 0;
+            box-shadow: none;
+            border: none;
+        }
+
+        .error-icon {
+            font-size: var(--font-size-6xl);
+            margin-bottom: var(--spacing-lg);
+            display: block;
+        }
+
+        .error-title {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .error-message {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-error-600);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .error-description {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-secondary);
+            line-height: var(--line-height-relaxed);
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .error-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .error-button {
+            padding: var(--spacing-lg) var(--spacing-2xl);
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            border: none;
+            min-width: 150px;
+        }
+
+        .primary-button {
+            background: var(--color-primary-500);
+            color: var(--color-text-inverse);
+        }
+
+        .primary-button:hover {
+            background: var(--color-primary-600);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--color-primary-500);
+            border: 2px solid var(--color-primary-500);
+        }
+
+        .secondary-button:hover {
+            background: var(--color-primary-50);
+            border-color: var(--color-primary-600);
+        }
+
+        .error-details {
+            margin-top: var(--spacing-xl);
+            padding: var(--spacing-lg);
+            background: var(--color-background-secondary);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--color-neutral-200);
+        }
+
+        .error-details-title {
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .error-details-text {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            line-height: var(--line-height-relaxed);
+        }
+
+        .error-code {
+            font-family: monospace;
+            background: var(--color-neutral-100);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-xs);
+            color: var(--color-text-secondary);
+            margin-top: var(--spacing-sm);
+        }
+
+        /* Network Error Specific Styles */
+        .network-error .error-icon {
+            color: var(--color-warning-500);
+        }
+
+        .network-error .error-message {
+            color: var(--color-warning-600);
+        }
+
+        /* API Error Specific Styles */
+        .api-error .error-icon {
+            color: var(--color-error-500);
+        }
+
+        .api-error .error-message {
+            color: var(--color-error-600);
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--color-neutral-200);
+            border-radius: 50%;
+            border-top-color: var(--color-primary-500);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: var(--spacing-sm);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .error-container {
+                padding: var(--spacing-lg);
+            }
+
+            .error-card {
+                padding: var(--spacing-2xl);
+            }
+
+            .error-title {
+                font-size: var(--font-size-2xl);
+            }
+
+            .error-message {
+                font-size: var(--font-size-lg);
+            }
+
+            .error-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .error-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-container {
+                padding: var(--spacing-md);
+            }
+
+            .error-card {
+                padding: var(--spacing-xl);
+            }
+        }
+        /* Footer (from landing.html) */
+        .footer {
+            background: var(--color-background-primary);
+            border-top: 1px solid var(--color-neutral-200);
+            padding: var(--spacing-xl) 0;
+            margin-top: var(--spacing-4xl);
+        }
+
+        .footer-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            text-align: center;
+            background: var(--color-background-primary) !important;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .footer-link {
+            color: var(--color-primary-500);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: normal;
+            transition: var(--transition-normal);
+        }
+
+        .footer-link:hover {
+            color: var(--color-primary-600);
+        }
+
+        .footer-text {
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-sm);
+        }
+        .share-header {
+            background: var(--color-background-primary) !important;
+            box-shadow: var(--shadow-sm) !important;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px) !important;
+        }
+        .header-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: var(--spacing-md) var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary-600);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        .logo-icon { font-size: var(--font-size-lg); }
+        .back-button {
+            background: transparent;
+            color: var(--color-primary-500);
+            border: 2px solid var(--color-primary-500);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+        .back-button:hover {
+            background: var(--color-primary-50);
+            border-color: var(--color-primary-600);
+        }
+        .error-page {
+            min-height: calc(100vh - var(--footer-height, 88px));
+            font-family: var(--font-family-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+        .footer {
+            --footer-height: 88px;
+            /* fallback, can be adjusted to match actual footer height */
+        }
+        .footer, .footer-container {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <header class="share-header">
+        <div class="header-container">
+            <a href="landing.html" class="logo">
+                <span class="logo-icon">🍀</span>
+                오늘의 행운지수
+            </a>
+            <button class="back-button" onclick="goBack()">이전으로</button>
+        </div>
+    </header>
+    <div class="error-page">
+        <div class="error-container">
+            <div class="error-card" id="errorCard">
+                <div class="error-icon" id="errorIcon">📡</div>
+                <h1 class="error-title">연결 오류</h1>
+                <div class="error-message" id="errorMessage">연결이 원활하지 않아요</div>
+                <p class="error-description" id="errorDescription">
+                    인터넷 상태를 확인한 후 다시 시도해 주세요.
+                </p>
+                
+                <div class="error-buttons">
+                    <button class="error-button primary-button" onclick="retryAction()" id="retryButton">
+                        <span class="loading-spinner" id="loadingSpinner" style="display: none;"></span>
+                        다시 시도하기
+                    </button>
+                    <button class="error-button secondary-button" onclick="goHome()">
+                        홈으로 돌아가기
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="about.html" class="footer-link">개인정보처리방침</a>
+            </div>
+            <div class="footer-text">Copyright © 2025 오늘의 행운지수. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Get error type from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorType = urlParams.get('type') || 'network';
+        const errorCode = urlParams.get('code') || 'ERR_NETWORK';
+
+        // Error configurations
+        const errorConfigs = {
+            network: {
+                icon: '📡',
+                title: '연결 오류',
+                message: '연결이 원활하지 않아요',
+                description: '인터넷 상태를 확인한 후 다시 시도해 주세요.',
+                code: 'ERR_NETWORK'
+            },
+            api: {
+                icon: '😥',
+                title: '서비스 오류',
+                message: '죄송해요. 행운지수를 불러오지 못했어요.',
+                description: '잠시 후 다시 시도하거나, 홈으로 이동해 주세요.',
+                code: 'ERR_API_FAILED'
+            },
+            timeout: {
+                icon: '⏰',
+                title: '시간 초과',
+                message: '요청 시간이 초과되었어요',
+                description: '네트워크 상태를 확인하고 다시 시도해 주세요.',
+                code: 'ERR_TIMEOUT'
+            },
+            server: {
+                icon: '🔧',
+                title: '서버 오류',
+                message: '서버에 일시적인 문제가 있어요',
+                description: '잠시 후 다시 시도해 주세요.',
+                code: 'ERR_SERVER'
+            }
+        };
+
+        // Initialize error page
+        function initializeErrorPage() {
+            const config = errorConfigs[errorType] || errorConfigs.network;
+            const errorCard = document.getElementById('errorCard');
+            const errorIcon = document.getElementById('errorIcon');
+            const errorMessage = document.getElementById('errorMessage');
+            const errorDescription = document.getElementById('errorDescription');
+            const errorCodeElement = document.getElementById('errorCode');
+
+            // Update content
+            errorIcon.textContent = config.icon;
+            document.querySelector('.error-title').textContent = config.title;
+            errorMessage.textContent = config.message;
+            errorDescription.textContent = config.description;
+            errorCodeElement.textContent = errorCode;
+
+            // Add error type class for styling
+            errorCard.className = `error-card ${errorType}-error`;
+        }
+
+        // Retry action
+        function retryAction() {
+            const retryButton = document.getElementById('retryButton');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const buttonText = retryButton.querySelector('span:not(.loading-spinner)');
+
+            // Show loading state
+            retryButton.disabled = true;
+            loadingSpinner.style.display = 'inline-block';
+            buttonText.textContent = '시도 중...';
+
+            // Simulate retry
+            setTimeout(() => {
+                // Check if it's a network error
+                if (errorType === 'network') {
+                    // Simulate network check
+                        if (navigator.onLine) {
+                        // If online, redirect to landing
+                        window.location.href = 'landing.html';
+                    } else {
+                        // If offline, show error
+                        showError('인터넷 연결을 확인해 주세요.');
+                        retryButton.disabled = false;
+                        loadingSpinner.style.display = 'none';
+                        buttonText.textContent = '다시 시도하기';
+                    }
+                } else {
+                    // For other errors, redirect to landing
+                    window.location.href = 'landing.html';
+                }
+            }, 2000);
+        }
+
+        // Go home function
+        function goHome() {
+            window.location.href = 'landing.html';
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorDescription = document.getElementById('errorDescription');
+            errorDescription.textContent = message;
+        }
+
+        // Handle online/offline events
+        window.addEventListener('online', function() {
+            if (errorType === 'network') {
+                showError('인터넷 연결이 복구되었습니다. 다시 시도해 주세요.');
+            }
+        });
+
+        window.addEventListener('offline', function() {
+            if (errorType === 'network') {
+                showError('인터넷 연결이 끊어졌습니다. 연결을 확인해 주세요.');
+            }
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                retryAction();
+            } else if (e.key === 'Escape') {
+                goHome();
+            }
+        });
+
+        // Initialize page
+        initializeErrorPage();
+
+        // Auto-retry for network errors after 5 seconds
+        if (errorType === 'network') {
+            setTimeout(() => {
+                if (navigator.onLine) {
+                    retryAction();
+                }
+            }, 5000);
+        }
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html> 

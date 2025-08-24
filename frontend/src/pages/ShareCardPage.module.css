@@ -1,0 +1,112 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* Adjust as needed */
+  padding: var(--spacing-lg);
+  background-color: #f0f2f5; /* Light background for sharing */
+}
+
+.shareCard {
+  background-color: #ffffff;
+  border-radius: var(--spacing-md);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: var(--spacing-xl);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  font-family: 'Noto Sans KR', sans-serif; /* Example font */
+}
+
+.title {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.subTitle {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: var(--spacing-lg);
+}
+
+.content {
+  line-height: 1.8;
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-lg);
+  color: #555;
+}
+
+.luckScore {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--primary-color-dark);
+  margin-bottom: var(--spacing-lg);
+}
+
+.recommendations {
+  margin-top: var(--spacing-lg);
+  border-top: 1px solid #eee;
+  padding-top: var(--spacing-lg);
+}
+
+.recommendations h3 {
+  color: #666;
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+}
+
+.recommendations ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.recommendations li {
+  background-color: var(--primary-color-light);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--spacing-md);
+  font-size: 0.9rem;
+}
+
+.footerText {
+  margin-top: var(--spacing-xl);
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  .container {
+    background-color: #1a1a1a;
+  }
+  .shareCard {
+    background-color: #2d2d2d;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+  .subTitle, .content, .recommendations h3 {
+    color: #ddd;
+  }
+  .recommendations li {
+    background-color: var(--primary-color-dark);
+  }
+  .footerText {
+    color: #777;
+  }
+}
+
+.shareButtonGroup {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.shareButtonGroup button {
+  flex: 1;
+  max-width: 150px;
+}

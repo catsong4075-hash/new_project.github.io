@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>개인정보처리방침 | 오늘의 행운지수</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+    <link rel="stylesheet" href="../../styles/variables.css">
+    <link rel="stylesheet" href="../../styles/global.css">
+    <style>
+    :root{
+      --txt:#1f2937; --muted:#6b7280; --bg:#ffffff; --card:#f9fafb; --line:#e5e7eb; --accent:#111827;
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Roboto,Apple SD Gothic Neo,Noto Sans KR,Malgun Gothic,sans-serif;line-height:1.65;}
+    .wrap{max-width:920px;margin:0 auto;padding:56px 20px 72px;}
+    h1{font-size:clamp(24px,3.2vw,32px);margin:0 0 12px 0;}
+    .meta{color:var(--muted);font-size:14px;margin-bottom:24px}
+    nav{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:24px 0}
+    nav ol{margin:0;padding-left:20px}
+    h2{font-size:clamp(18px,2.4vw,22px);margin:36px 0 8px}
+    h3{font-size:16px;margin:24px 0 8px}
+    section{padding-top:8px;border-top:1px solid var(--line)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin:12px 0}
+    code.k{background:#eef2ff;border:1px solid #e0e7ff;border-radius:6px;padding:2px 6px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    table{border-collapse:collapse;width:100%;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+    th,td{border-bottom:1px solid var(--line);padding:12px 10px;text-align:left;vertical-align:top}
+    th{background:#f3f4f6;font-weight:600}
+    .muted{color:var(--muted)}
+    .btn{display:inline-block;border:1px solid var(--accent);padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--bg);background:var(--accent);font-size:14px}
+    .notice{font-size:14px;color:#92400e;background:#fef3c7;border:1px solid #fde68a;border-radius:10px;padding:10px 12px;margin-top:8px}
+    footer{margin-top:48px;color:var(--muted);font-size:13px}
+    @media (prefers-color-scheme: dark){
+      :root{--bg:#0b0f14;--txt:#e5e7eb;--muted:#9ca3af;--card:#0f1720;--line:#1f2937;--accent:#f9fafb}
+      table{background:#0b0f14}
+      th{background:#0f1720}
+    }
+    /* Header (from landing.html) */
+    .landing-header {
+            background: var(--color-background-primary);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+      backdrop-filter: blur(10px);
+        }
+        .header-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: var(--spacing-md) var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary-600);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+    .logo-icon { font-size: var(--font-size-lg); }
+    .header-actions { display: flex; gap: var(--spacing-md); align-items: center; }
+    .share-button {
+      background: transparent;
+      color: var(--color-primary-500);
+      border: 2px solid var(--color-primary-500);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--border-radius-lg);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      transition: var(--transition-normal);
+    }
+    .share-button:hover { background: var(--color-primary-50); border-color: var(--color-primary-600); }
+    .share-tooltip {
+      position: absolute; bottom: 100%; right: 0; background: var(--color-neutral-800);
+      color: var(--color-text-inverse); padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--border-radius-md); font-size: var(--font-size-xs);
+      white-space: nowrap; opacity: 0; visibility: hidden; transition: var(--transition-normal);
+      margin-bottom: var(--spacing-sm);
+    }
+    .share-button:hover .share-tooltip { opacity: 1; visibility: visible; }
+
+    /* Footer (from landing.html) */
+    .footer { background: var(--color-background-primary); border-top: 1px solid var(--color-neutral-200); padding: var(--spacing-xl) 0; margin-top: var(--spacing-4xl); }
+    .footer-container { max-width: var(--container-max-width); margin: 0 auto; padding: 0 var(--spacing-lg); text-align: center; }
+    .footer-links { display: flex; justify-content: center; gap: var(--spacing-xl); margin-bottom: var(--spacing-lg); }
+    .footer-link { color: var(--color-primary-500); text-decoration: none; font-size: var(--font-size-sm); font-weight: normal; transition: var(--transition-normal); }
+    .footer-link:hover { color: var(--color-primary-600); }
+    .footer-text { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
+
+    /* Keep header height, ensure share button height is 40px */
+    .header .header-container { padding: var(--spacing-md) var(--spacing-lg); }
+    #shareButton { height: 40px; min-height: 40px; }
+        .back-button {
+            background: transparent;
+            color: var(--color-primary-500);
+            border: 2px solid var(--color-primary-500);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+        .back-button:hover {
+            background: var(--color-primary-50);
+            border-color: var(--color-primary-600);
+        }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-background-secondary) 100%);
+      font-family: var(--font-family-primary);
+    }
+    .share-header {
+            background: var(--color-background-primary);
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    main.wrap section > h2 + ul {
+      margin-top: 8px;
+      margin-bottom: 20px;
+      padding-left: 22px;
+      font-size: 16px;
+      color: #333;
+    }
+    main.wrap section > h2 {
+      margin-bottom: 4px;
+    }
+    main.wrap section#cookies > ul,
+    main.wrap section#remedy > ul,
+    main.wrap section#notice > ul {
+      margin-top: 8px;
+      margin-bottom: 20px;
+      padding-left: 0;
+      margin-left: 0;
+      list-style-position: inside;
+      font-size: 16px;
+      color: #333;
+    }
+    main.wrap section#cookies > h2,
+    main.wrap section#remedy > h2,
+    main.wrap section#notice > h2 {
+      margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+  <header class="share-header">
+            <div class="header-container">
+      <a href="landing.html" class="logo">
+                    <span class="logo-icon">🍀</span>
+                    오늘의 행운지수
+                </a>
+                <button class="back-button" onclick="goBack()">이전으로</button>
+            </div>
+        </header>
+
+  <main class="wrap" role="main">
+    <header>
+      <h1>개인정보처리방침</h1>
+      <div class="meta" aria-label="policy-dates">
+        제정일: <time datetime="2025-08-17">2025-08-17</time> · 시행일: <time datetime="2025-08-17">2025-08-17</time>
+            </div>
+      <p class="muted">오늘의 행운지수(이하 “서비스”)는 「개인정보보호법」을 준수하며, 이용자의 개인정보를 안전하게 관리하기 위해 다음과 같이 개인정보 처리방침을 수립·공개합니다. 본 서비스는 원칙적으로 서버(DB)에 개인정보를 저장하지 않으며, 이용자 기기에서 일시적으로 처리합니다.</p>
+    </header>
+
+    <nav aria-label="목차">
+      <strong>목차</strong>
+      <ol>
+        <li><a href="#items">수집하는 개인정보 항목</a></li>
+        <li><a href="#purpose">개인정보의 수집 및 이용 목적</a></li>
+        <li><a href="#retention">보유 및 이용 기간</a></li>
+        <li><a href="#third">제3자 제공에 관한 사항</a></li>
+        <li><a href="#outsourcing">개인정보 처리의 위탁</a></li>
+        <li><a href="#destruction">개인정보의 파기 절차 및 방법</a></li>
+        <li><a href="#rights">이용자의 권리 및 동의 거부</a></li>
+        <li><a href="#safety">개인정보의 안전성 확보 조치</a></li>
+        <li><a href="#cookies">쿠키/로컬스토리지 등 로컬 저장 안내</a></li>
+        <li><a href="#children">만 14세 미만 아동</a></li>
+        <li><a href="#remedy">권리 구제 방법</a></li>
+        <li><a href="#contact">개인정보 보호책임자</a></li>
+        <li><a href="#notice">고지 의무 및 이전 버전</a></li>
+      </ol>
+    </nav>
+
+    <section id="items">
+      <h2>1. 수집하는 개인정보 항목</h2>
+      <div class="card">
+        <p><strong>필수 항목</strong>: 이름(또는 별명), 생년월일, 성별, 태어난 시간</p>
+        <p><strong>선택 항목</strong>: (없음) ※ 추후 추가 시 별도 동의</p>
+        <p class="muted">※ 입력 데이터는 원칙적으로 이용자 기기(브라우저/앱)에서만 처리됩니다.</p>
+                        </div>
+    </section>
+
+    <section id="purpose">
+      <h2>2. 개인정보의 수집 및 이용 목적</h2>
+      <ul>
+        <li>개인 맞춤 운세 산출 및 서비스 제공</li>
+      </ul>
+      <p class="notice">회사는 목적 달성에 필요한 최소한의 범위에서만 개인정보를 이용합니다.</p>
+    </section>
+
+    <section id="retention">
+      <h2>3. 보유 및 이용 기간</h2>
+      <ul>
+        <li><strong>회사 보유기간</strong>: 없음(서버 미보관)</li>
+        <li><strong>처리 방식</strong>: 입력된 개인정보는 회사 서버(DB)로 전송·저장되지 않으며, 이용자 기기(브라우저/앱)에서 일시적으로만 처리됩니다.</li>
+      </ul>
+    </section>
+
+    <section id="third">
+      <h2>4. 제3자 제공에 관한 사항</h2>
+      <p>회사는 이용자의 개인정보를 외부에 제공하지 않습니다. 다만 법령에 따른 요청이 있는 경우에는 예외적으로 제공될 수 있습니다.</p>
+    </section>
+
+    <section id="outsourcing">
+      <h2>5. 개인정보 처리의 위탁</h2>
+      <p>회사는 개인정보 처리 업무를 외부 업체에 위탁하지 않습니다.</p>
+    </section>
+
+    <section id="destruction">
+      <h2>6. 개인정보의 파기 절차 및 방법</h2>
+      <ul>
+        <li><strong>파기 절차</strong>: 처리 목적 달성, 보유기간 경과 또는 동의 철회 시 지체 없이 파기합니다.</li>
+        <li><strong>파기 방법</strong>: 전자파일은 복구가 불가능한 기술적 방법으로 삭제하며, 출력물은 분쇄 또는 소각합니다.</li>
+      </ul>
+    </section>
+
+    <section id="rights">
+      <h2>7. 이용자의 권리 및 동의 거부</h2>
+      <ul>
+        <li>이용자는 언제든지 본인 개인정보 입력을 중단하거나 삭제할 수 있습니다.</li>
+        <li>서버 저장이 없으므로 별도의 열람·정정·삭제 청구 절차는 필요하지 않습니다.</li>
+        <li>이용자는 개인정보 수집·이용에 대한 동의를 거부할 권리가 있으며, 다만 동의를 거부하는 경우 서비스 제공이 제한될 수 있습니다.</li>
+      </ul>
+    </section>
+
+    <section id="safety">
+      <h2>8. 개인정보의 안전성 확보 조치</h2>
+      <ul>
+        <li>최소 수집·무저장 설계(이용자 기기 내 일시 처리)</li>
+        <li>전송 구간 암호화(HTTPS/SSL·TLS)</li>
+        <li>접근 권한 최소화, 내부관리계획 수립, 접속 기록 관리 등 기술적·관리적 보호조치 시행</li>
+      </ul>
+    </section>
+
+    <section id="cookies">
+      <h2>9. 쿠키/로컬스토리지 등 로컬 저장 안내</h2>
+      <p>회사는 기본 설정 저장, 개인화 등을 위해 브라우저 <strong>로컬스토리지/세션스토리지/쿠키</strong>를 사용할 수 있습니다.</p>
+      <ul>
+        <li>저장 항목 예시: <code class="k">name</code>, <code class="k">birthDatetime</code> (예: <code class="k">1992-03-14T09</code>)</li>
+        <li>변경/거부 방법: 브라우저 설정에서 사이트 데이터(쿠키/저장소)를 삭제하거나 차단할 수 있습니다.</li>
+      </ul>
+
+      <div class="card" role="region" aria-label="로컬 저장 삭제 도구">
+        <h3>로컬 저장 데이터 직접 삭제</h3>
+        <p class="muted">아래 버튼은 현재 브라우저에 저장된 기본 항목(<code class="k">name</code>, <code class="k">birthDatetime</code>)을 삭제합니다. 실제 서비스 키 이름에 맞게 스크립트를 조정하세요.</p>
+        <button class="btn" id="clearLocalBtn" type="button">로컬 데이터 삭제</button>
+        <div id="clearMsg" class="notice" style="display:none;margin-top:12px">브라우저에 저장된 관련 데이터가 삭제되었습니다.</div>
+                    </div>
+    </section>
+
+    <section id="children">
+      <h2>10. 만 14세 미만 아동</h2>
+      <p>본 서비스는 원칙적으로 만 14세 미만 아동의 이용을 제한합니다. 불가피하게 아동의 개인정보를 처리하는 경우에는 <strong>법정대리인의 동의</strong>를 받은 후 처리합니다.</p>
+    </section>
+
+    <section id="remedy">
+      <h2>11. 권리 구제 방법</h2>
+      <p>이용자는 개인정보 침해에 대한 상담 및 피해 구제를 위해 아래 기관에 문의할 수 있습니다.</p>
+      <ul>
+        <li>개인정보보호위원회: 국번 없이 118, <a href="https://www.privacy.go.kr" target="_blank" rel="noopener">privacy.go.kr</a></li>
+        <li>대검찰청 사이버수사과: <a href="http://www.spo.go.kr" target="_blank" rel="noopener">spo.go.kr</a></li>
+        <li>경찰청 사이버수사국: <a href="https://ecrm.police.go.kr" target="_blank" rel="noopener">ecrm.police.go.kr</a></li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>12. 개인정보 보호책임자</h2>
+      <table>
+        <tbody>
+          <tr><th scope="row">성명/직책</th><td>[홍길동 / 개인정보보호책임자(CPO)]</td></tr>
+          <tr><th scope="row">이메일</th><td><a href="mailto:privacy@example.com">privacy@example.com</a></td></tr>
+          <tr><th scope="row">연락처</th><td>[02-0000-0000]</td></tr>
+          <tr><th scope="row">주소</th><td>[서울특별시 ○○구 ○○로 00, ○층]</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="notice">
+      <h2>13. 고지 의무 및 이전 버전</h2>
+      <p>본 방침은 법령, 정책 또는 보안 기술의 변경에 따라 수정될 수 있으며, 중요한 변경이 있을 경우 사전 공지 후 시행합니다. 중요한 변경의 경우 최소 7일 전에 공지합니다.</p>
+      <ul>
+        <li>최근 개정일: <time datetime="2025-08-17">2025-08-17</time></li>
+        <li>이전 버전 보관: 요청 시 제공</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-links">
+        <a href="privacy.html" class="footer-link">개인정보처리방침</a>
+            </div>
+      <div class="footer-text">Copyright © 2025 오늘의 행운지수. All rights reserved.</div>
+        </div>
+  </footer>
+
+  <!-- 로컬 삭제 스크립트: 실제 키 이름으로 수정해 사용하세요. -->
+    <script>
+    (function(){
+      const btn = document.getElementById('clearLocalBtn');
+      const msg = document.getElementById('clearMsg');
+      if(btn){
+        btn.addEventListener('click', function(){
+          try{
+            // 실제 서비스 로컬 저장 키에 맞춰 수정
+            localStorage.removeItem('name');
+            localStorage.removeItem('birthDatetime');  // 예: "1992-03-14T09"
+            sessionStorage.removeItem('name');
+            sessionStorage.removeItem('birthDatetime');
+            document.cookie = "name=; Max-Age=0; path=/";
+            document.cookie = "birthDatetime=; Max-Age=0; path=/";
+            msg.style.display = 'block';
+          }catch(e){
+            console.warn('로컬 삭제 중 오류:', e);
+            alert('로컬 데이터 삭제 중 오류가 발생했습니다.');
+          }
+        });
+      }
+    })();
+  </script>
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+    </script>
+</body>
+</html> 
+

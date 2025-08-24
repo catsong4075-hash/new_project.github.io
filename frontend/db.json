@@ -1,0 +1,27 @@
+{
+  "contents": [
+    {
+      "id": 1,
+      "title": "오늘의 운세",
+      "content_text": "오늘은 매우 좋은 날입니다. 모든 일이 순조롭게 진행될 것입니다.",
+      "content_html": "<p>오늘은 <strong>매우 좋은 날</strong>입니다. 모든 일이 순조롭게 진행될 것입니다.</p>",
+      "status": "published",
+      "published_at": "2025-08-23T10:00:00Z",
+      "luckScore": 85
+    }
+  ],
+  "recommendations": [
+    {
+      "id": 1,
+      "content_id": 1,
+      "item": "파란색 셔츠",
+      "reason": "행운을 가져다 줄 색상입니다."
+    },
+    {
+      "id": 2,
+      "content_id": 1,
+      "item": "따뜻한 차",
+      "reason": "마음의 안정을 찾아줍니다."
+    }
+  ]
+}

@@ -1,0 +1,299 @@
+Unified Design Workflow Guidelines
+1. Overview
+This guideline defines a standard workflow and rules for developing consistent, scalable, and high-quality web interfaces. All UI development work should be systematically conducted according to this guideline, focusing on design tokens defined in designs/design.json and page management via SITEMAP/sitemap.html.
+
+1.1. Core Principles
+Token-First: All visual elements (color, typography, spacing, etc.) must use tokens defined in design.json. Hard-coded values are strictly prohibited.
+
+Consistency: All UI elements and pages must adhere to the defined design system to provide a consistent user experience.
+Scalability: Designs must seamlessly integrate with existing systems, even when new features or components are added.
+Maintainability: Maximize system maintainability through a clear file structure, naming conventions, and centralized sitemap management.
+
+2. Design System Structure
+This workflow is based on the following file structure: designs/design.json: A central configuration file that defines all design tokens (colors, fonts, spacing, etc.).
+SITEMAP/sitemap.html: A tool for managing the list of all pages in the project, their statuses, and the link structure.
+ui_{n}.html: The actual UI interface pages.
+
+Important: Create a new design file in the fontend>src>pages directory.
+
+assets/: A folder for static resources such as images and icons.
+
+3. Step 1: Extract Design Tokens and Create Design.json
+The first step in any UI development is to extract reusable design principles from visual artifacts (design drafts, screenshots, etc.) and create a designs/design.json file.
+
+Goal: Define scalable design tokens that are independent of specific content and can be applied to any project.
+
+5-Step Process for Creating Design.json
+Extract and Define Color System (Colors)
+Extract: Identify the brand's primary, secondary, and status (Success, Warning, Error) color palettes. Definition: Define a step-by-step color scheme based on brightness (50-900) to ensure consistency.
+Requirement: Text and background color combinations must adhere to a contrast ratio of at least 4.5:1, as per WCAG 2.1 AA standards.
+
+Typography System Extraction and Definition
+Extraction: Identify font type, size, weight, and line spacing for hierarchical content, such as titles, body text, and captions.
+Definition: Define the fontFamily, fontSize, fontWeight, and lineHeight tokens. FontSize should use the relative unit rem as a general rule.
+
+**Definition of image ratios and file format rules for website use (standardization)**
+
+**Important: All file formats must be .PNG.**
+
+[1:1 ratio]
+– Use for creating thumbnails, icons, profile images, etc.
+– Set the resolution to 800 x 800 pixels. – This is the basic square format, ideal for square block UIs.
+
+[9:16 Ratio]
+– Use for mobile-only content (e.g., full-screen banners, Riles-style videos).
+– Please create images at a resolution of 720 x 1280 pixels.
+– This ratio is optimized for vertical content and is suitable for full-screen mobile applications.
+
+[16:9 Ratio]
+– Use for main banners, video cover images, and thumbnail designs.
+– The recommended resolution is 1280 x 720 pixels.
+– This is a horizontal ratio ideal for wide-screen content.
+
+[4:3 Ratio]
+– Use for creating images within content, gallery thumbnails, and more.
+– Set the resolution to 1024 x 768 pixels.
+– This is the most versatile ratio and can be used reliably for a variety of embedded images.
+
+[3:4 Ratio]
+– Use for poster-style images and event introduction cards. – Set the resolution to 900 x 1200 pixels.
+– This is a vertical format suitable for layouts that feel like printed matter or for content on detail pages.
+
+Extract and Define Spacing Systems (Spacing)
+Extract: Analyze margin and padding rules between components to identify visual rhythm.
+Definition: Define 8px-based multiplication systems (8px, 16px, 24px, etc.) using predictable tokens like spacing-xs and spacing-sm.
+Extract and Define Component Styles (Components)
+Extract: Identify basic styles for key components like buttons, cards, and tables, as well as styles for state transitions (hover, focus, active, disabled).
+Definition: Tokenize styles for all states of each component to create a consistent user experience.
+
+Extract and Define Visual Effects (Effects)
+Extract: Identify common visual effects like rounded corners and drop shadows. Define reusable tokens, such as border-radius and box-shadow.
+
+4. Step 2: UI Page Creation 7-Step Workflow
+New UI pages must be created following the following 7-step workflow:
+
+Step 1: Requirements Analysis
+Clearly define the page's purpose, target users, core functionality, and role in the user journey.
+
+Step 2: Design Token Implementation Plan
+Specifically plan how to utilize the tokens defined in design.json and explore ways to reuse existing components as much as possible. If new design properties are needed, first add the tokens to design.json.
+
+Step 3: HTML Structure Design and File Creation
+Design a semantic and accessible HTML structure. Create a ui_{n}.html file, following the file naming convention below.
+
+File Naming Convention
+Page: ui_{number}.html (e.g., ui_1.html)
+CSS Class: BEM methodology (.block__element--modifier) (e.g., .card__header, .button--primary)
+CSS Variable: --category-property-value (e.g., --color-primary-500)
+
+Step 4: Implement CSS Styles
+Implement styles using only CSS variables (tokens) derived from design.json. Implement a responsive design with a mobile-first approach.
+
+Step 5: Implement JavaScript Functions
+Implement necessary interactions in a modularized manner for reuse. Ensure core functionality works even in environments with JavaScript disabled, following the principle of progressive enhancement.
+
+Step 6: Quality Verification
+All items in **[6. Quality Management Checklist]** below must be passed.
+
+Step 7: Sitemap Update
+Add verified page information to SITEMAP/sitemap.html, change the status from "Pending" to "Active," and document the link structure within the page in detail.
+
+※ Multi-Agent Approach (Solving Complex UI)
+For complex UI requirements, instead of a single concept, develop the UI simultaneously using three different approaches to select the optimal solution.
+Approach Examples:
+
+UX-Centered Design: User Experience First (ui_{n}a.html)
+Developer-Centered Design: Emphasizes Technical Efficiency and Ease of Implementation (ui_{n}b.html)
+Business-Centered Design: Focuses on Conversion Rates and Other Business Goals (ui_{n}c.html)
+
+Goal: Help stakeholders directly compare options and select the most effective solution.
+
+5. SITEMAP.html Management Rules
+SITEMAP/sitemap.html is a key tool for centrally managing all project pages. Core Features:
+Page List Management: Provides a list of all page names, file names, status (active/pending), and link information.
+Link Structure Guide: Document the destinations of buttons and links within a page to help understand the overall navigation flow.
+
+Management Principles:
+All pages created must be registered in sitemap.html.
+Upon completion of page development, update the status to "active" and keep link information up-to-date.
+
+6. Quality Control Checklist
+All pages must meet the following criteria before deployment:
+Design Consistency
+[ ] Do all colors use design.json tokens?
+[ ] Does the typography follow the defined tokens?
+[ ] Does it adhere to the spacing system (margin, padding)?
+
+Functionality
+[ ] Do all interactive elements (buttons, links, forms, etc.) function properly?
+[ ] Is form validation implemented correctly?
+[ ] Are all features accessible and usable using the keyboard? [ ] Is it optimized for touch interfaces? (Button sizes, etc.)
+
+Performance
+[ ] Does the page load within 3 seconds?
+[ ] Are all images optimized?
+[ ] Is there any unnecessary loading of CSS/JS resources?
+
+Accessibility
+[ ] Does it comply with WCAG 2.1 AA standards?
+[ ] Is all content readable by screen readers?
+[ ] Does it meet a color contrast ratio of 4.5:1 or higher?
+
+7. Troubleshooting and Maintenance
+If an issue occurs:
+Design issues (color inconsistencies, layout breaks, etc.): First, check the token definitions in design.json and the CSS settings for the corresponding elements.
+Technical issues (JS errors, CSS variables not applied, etc.): Use the browser's developer tools (console, network tab) to identify the cause.
+
+
+통합 디자인 워크플로우 지침서
+1. 개요
+본 지침서는 일관되고 확장 가능한 고품질 웹 인터페이스를 개발하기 위한 표준 워크플로우와 규칙을 정의합니다. 모든 UI 개발 작업은 이 지침서를 따라 체계적으로 수행되어야 하며, designs/design.json에 정의된 디자인 토큰과 SITEMAP/sitemap.html을 통한 페이지 관리를 핵심 축으로 삼습니다.
+
+1.1. 핵심 원칙
+디자인 토큰 우선 (Token-First): 모든 시각적 요소(색상, 타이포그래피, 간격 등)는 반드시 design.json에 정의된 토큰을 사용해야 합니다. 하드코딩된 값의 사용은 엄격히 금지됩니다.
+
+일관성 (Consistency): 모든 UI 요소와 페이지는 정의된 디자인 시스템을 준수하여 사용자에게 일관된 경험을 제공해야 합니다.
+확장성 (Scalability): 새로운 기능이나 컴포넌트가 추가되더라도 기존 시스템과 완벽하게 조화를 이루도록 설계해야 합니다.
+유지보수성 (Maintainability): 명확한 파일 구조, 명명 규칙, 중앙화된 사이트맵 관리를 통해 시스템의 유지보수 효율을 극대화합니다.
+
+2. 디자인 시스템의 구조
+본 워크플로우는 아래의 파일 구조를 기반으로 합니다.
+designs/design.json: 모든 디자인 토큰(색상, 폰트, 간격 등)을 정의하는 중앙 설정 파일.
+SITEMAP/sitemap.html: 프로젝트의 모든 페이지 목록, 상태, 링크 구조를 관리하는 도구.
+ui_{n}.html: 실제 UI 인터페이스 페이지.
+
+중요 : 디자인은 fontend>src>pages에 디렉토리 폴더에 신규로 생성합니다. 
+
+assets/: 이미지, 아이콘 등 정적 자원 폴더.
+
+3. 1단계: 디자인 토큰 추출 및 design.json 생성
+모든 UI 개발의 첫 단계는 시각적 결과물(디자인 시안, 스크린샷 등)에서 재사용 가능한 디자인 원칙을 추출하여 designs/design.json 파일을 생성하는 것입니다.
+
+목표: 특정 콘텐츠에 종속되지 않고, 어떤 프로젝트에도 적용할 수 있는 확장 가능한 디자인 토큰을 정의합니다.
+
+design.json 생성 5단계 프로세스
+색상 시스템 (Colors) 추출 및 정의
+추출: 브랜드의 핵심 색상(Primary), 보조 색상(Secondary), 상태(Success, Warning, Error) 색상 팔레트를 식별합니다.
+정의: 명도(50~900)에 따른 단계별 색상 체계를 정의하여 일관성을 확보합니다.
+필수 요건: 텍스트와 배경색 조합은 WCAG 2.1 AA 기준에 따라 명도 대비율 4.5:1 이상을 반드시 준수해야 합니다.
+
+타이포그래피 시스템 (Typography) 추출 및 정의
+추출: 제목, 본문, 캡션 등 위계에 따른 폰트 종류, 크기, 굵기, 행간을 식별합니다.
+정의: fontFamily, fontSize, fontWeight, lineHeight 토큰을 정의합니다. fontSize는 상대 단위인 rem 사용을 원칙으로 합니다.
+
+**웹사이트에 들어갈 이미지 비율 정의 및 파일포멧 규칙 (규격화)**
+
+**중요 : 파일포멧은 모두 .PNG로 합니다.** 
+[1:1 비율]
+– 썸네일, 아이콘, 프로필 이미지 등을 제작할 때 사용하세요.
+– 해상도는 800 x 800 픽셀로 맞춰주세요.
+– 정사각형 형태로, 네모난 블럭 UI에 가장 적합한 기본형입니다.
+
+[9:16 비율]
+– 모바일 전용 콘텐츠(예: 전체화면 배너, 리일스 스타일 영상)에 사용하세요.
+– 해상도는 720 x 1280 픽셀을 기준으로 제작해주세요.
+– 세로형 콘텐츠에 최적화된 비율이며, 풀스크린 모바일 영역에 적합합니다.
+
+[16:9 비율]
+– 메인 배너, 영상 커버 이미지, 썸네일 디자인 시 사용하세요.
+– 권장 해상도는 1280 x 720 픽셀입니다.
+– 와이드 레이아웃 기반 콘텐츠에 잘 어울리는 가로형 비율입니다.
+
+[4:3 비율]
+– 콘텐츠 본문 내 이미지, 갤러리 썸네일 등을 만들 때 활용하세요.
+– 해상도는 1024 x 768 픽셀을 기준으로 설정하세요.
+– 가장 범용적인 비율로, 다양한 삽입 이미지에 안정적으로 사용됩니다.
+
+[3:4 비율]
+– 포스터형 이미지, 이벤트 소개 카드 디자인 시 적용하세요.
+– 해상도는 900 x 1200 픽셀로 설정합니다.
+– 인쇄물 느낌을 주는 구성이나 상세 페이지용 콘텐츠에 적합한 세로형입니다.
+
+
+간격 시스템 (Spacing) 추출 및 정의
+추출: 컴포넌트 간 여백(margin), 내부 여백(padding) 규칙을 분석하여 시각적 리듬을 파악합니다.
+정의: 8px 기반의 배수 시스템(8px, 16px, 24px...)을 spacing-xs, spacing-sm 등 예측 가능한 토큰으로 정의합니다.
+컴포넌트 스타일 (Components) 추출 및 정의
+추출: 버튼, 카드, 테이블 등 주요 컴포넌트의 기본 스타일과 상태 변화(hover, focus, active, disabled) 스타일을 파악합니다.
+정의: 각 컴포넌트의 모든 상태에 대한 스타일을 토큰화하여 일관된 사용자 경험의 기반을 마련합니다.
+
+시각 효과 (Effects) 추출 및 정의
+추출: 모서리 둥글기(rounded corners), 그림자(drop shadows) 등 공통 시각 효과를 식별합니다.
+정의: border-radius, box-shadow 등의 이름으로 재사용 가능한 토큰을 정의합니다.
+
+4. 2단계: UI 페이지 제작 7단계 워크플로우
+새로운 UI 페이지는 반드시 다음 7단계 워크플로우를 따라 생성해야 합니다.
+
+1단계: 요구사항 분석
+페이지의 목적, 타겟 사용자, 핵심 기능, 사용자 여정 내 역할을 명확히 정의합니다.
+
+2단계: 디자인 토큰 적용 계획
+design.json에 정의된 토큰을 어떻게 활용할지 구체적으로 계획하고, 기존 컴포넌트를 최대한 재사용할 방안을 모색합니다. 새로운 디자인 속성이 필요하면 먼저 design.json에 토큰을 추가합니다.
+
+3단계: HTML 구조 설계 및 파일 생성
+시맨틱하고 접근성 높은 HTML 구조를 설계합니다. 아래 파일 명명 규칙을 준수하여 ui_{n}.html 파일을 생성합니다.
+
+파일 명명 규칙
+페이지: ui_{숫자}.html (예: ui_1.html)
+CSS 클래스: BEM 방법론 (.block__element--modifier) (예: .card__header, .button--primary)
+CSS 변수: --category-property-value (예: --color-primary-500)
+
+4단계: CSS 스타일 구현
+오직 design.json에서 파생된 CSS 변수(토큰)만을 사용하여 스타일을 구현합니다. 모바일 우선 접근법으로 반응형 디자인을 구현합니다.
+
+5단계: JavaScript 기능 구현
+필요한 인터랙션을 재사용 가능하도록 모듈화하여 구현합니다. 점진적 향상 원칙에 따라 JavaScript 비활성 환경에서도 핵심 기능이 동작하도록 합니다.
+
+6단계: 품질 검증
+아래 **[6. 품질 관리 체크리스트]**의 모든 항목을 통과해야 합니다.
+
+7단계: Sitemap 업데이트
+검증이 완료된 페이지 정보를 SITEMAP/sitemap.html에 추가하고, 상태를 '대기'에서 '활성'으로 변경하며, 페이지 내 링크 구조를 상세히 문서화합니다.
+
+※ 다중 에이전트 접근 방식 (복잡한 UI 해결)
+복잡한 UI 요구사항의 경우, 단일 컨셉이 아닌 3가지 다른 접근 방식으로 UI를 동시에 개발하여 최적의 안을 선택할 수 있습니다.
+접근 방식 예시:
+
+UX 중심 설계: 사용자 경험 최우선 (ui_{n}a.html)
+개발자 중심 설계: 기술 효율성 및 구현 용이성 강조 (ui_{n}b.html)
+비즈니스 중심 설계: 전환율 등 비즈니스 목표 달성 중시 (ui_{n}c.html)
+
+목표: 이해관계자가 여러 옵션을 직접 비교하고 가장 효과적인 솔루션을 선택하도록 지원합니다.
+
+5. SITEMAP.html 관리 규칙
+SITEMAP/sitemap.html은 프로젝트의 모든 페이지를 중앙에서 관리하는 핵심 도구입니다.
+핵심 기능:
+페이지 목록 관리: 모든 페이지의 이름, 파일명, 상태(활성/대기), 링크 정보를 목록으로 제공합니다.
+링크 구조 가이드: 페이지 내 버튼과 링크의 목적지를 문서화하여 전체 네비게이션 흐름을 파악하게 돕습니다.
+
+관리 원칙:
+생성되는 모든 페이지는 반드시 sitemap.html에 등록해야 합니다.
+페이지 개발 완료 후 상태를 '활성'으로 업데이트하고, 링크 정보를 최신으로 유지해야 합니다.
+
+6. 품질 관리 체크리스트
+모든 페이지는 배포 전 다음 기준을 만족해야 합니다.
+디자인 일관성
+[ ] 모든 색상이 design.json 토큰을 사용하는가?
+[ ] 타이포그래피가 정의된 토큰을 따르는가?
+[ ] 간격 시스템(margin, padding)을 준수하는가?
+
+기능성
+[ ] 모든 인터랙션 요소(버튼, 링크, 폼 등)가 정상 작동하는가?
+[ ] 폼 유효성 검사가 올바르게 구현되었는가?
+[ ] 키보드만으로 모든 기능에 접근하고 사용할 수 있는가?
+[ ] 터치 인터페이스에 최적화되었는가? (버튼 크기 등)
+
+성능
+[ ] 페이지 로딩 시간이 3초 이내인가?
+[ ] 모든 이미지가 최적화되었는가?
+[ ] 불필요한 CSS/JS 리소스 로딩이 없는가?
+
+접근성
+[ ] WCAG 2.1 AA 기준을 준수하는가?
+[ ] 모든 콘텐츠가 스크린 리더로 적절히 읽히는가?
+[ ] 색상 대비율이 4.5:1 이상을 만족하는가?
+
+7. 문제 해결 및 유지보수
+문제 발생 시:
+디자인 문제 (색상 불일치, 레이아웃 깨짐 등): design.json의 토큰 정의와 해당 요소의 CSS 설정을 가장 먼저 확인합니다.
+기술 문제 (JS 오류, CSS 변수 미적용 등): 브라우저의 개발자 도구(콘솔, 네트워크 탭)를 통해 원인을 분석합니다.

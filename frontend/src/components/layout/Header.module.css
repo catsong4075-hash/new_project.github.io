@@ -1,0 +1,33 @@
+/* frontend/src/components/layout/Header.module.css */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: var(--background-color-light);
+  border-bottom: 1px solid #eee;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.nav a {
+  margin-left: var(--spacing-md);
+  text-decoration: none;
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  .header {
+    background-color: var(--background-color-dark);
+    border-bottom: 1px solid #333;
+  }
+}

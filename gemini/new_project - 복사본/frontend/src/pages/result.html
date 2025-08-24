@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 행운지수 결과 - 민지님의 8월 27일 행운지수</title>
+    <meta name="description" content="민지님의 오늘 행운지수는 87점입니다. 오늘의 행운 강화법과 상세 분석을 확인해보세요.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="../../styles/variables.css">
+    <link rel="stylesheet" href="../../styles/global.css">
+    
+    <style>
+        /* Result Page Specific Styles */
+        .result-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-background-secondary) 100%);
+            font-family: var(--font-family-primary);
+        }
+
+        .result-header {
+            background: var(--color-background-primary);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: var(--spacing-md) var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary-600);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .logo-icon {
+            font-size: var(--font-size-lg);
+        }
+
+        .back-button {
+            background: transparent;
+            color: var(--color-primary-500);
+            border: 2px solid var(--color-primary-500);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        .back-button:hover {
+            background: var(--color-primary-50);
+            border-color: var(--color-primary-600);
+        }
+
+        .result-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: var(--spacing-2xl) var(--spacing-lg);
+        }
+
+        .result-title {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-2xl) - 4px);
+        }
+
+        .result-title h1 {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .result-title p {
+            font-size: calc(var(--font-size-lg) - 1px);
+            color: var(--color-text-secondary);
+        }
+
+        .score-section {
+            background: var(--color-background-primary);
+            border-radius: var(--border-radius-2xl);
+            padding: var(--spacing-3xl);
+            margin-bottom: var(--spacing-2xl);
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+
+        .score-gauge {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto var(--spacing-xl);
+            position: relative;
+        }
+
+        .gauge-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--color-primary-500) 0deg 313deg,
+                var(--color-neutral-200) 313deg 360deg
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .gauge-inner {
+            width: 80%;
+            height: 80%;
+            background: var(--color-background-primary);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score-number {
+            font-size: var(--font-size-5xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary-600);
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-top: var(--spacing-xs);
+        }
+
+        .score-message {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .fortune-summary {
+            background: var(--color-background-primary);
+            border-radius: var(--border-radius-2xl);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .summary-title {
+            font-size: calc(var(--font-size-2xl) - 2px);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .summary-text {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-secondary);
+            line-height: var(--line-height-relaxed);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .recommendations-section {
+            background: var(--color-background-primary);
+            border-radius: var(--border-radius-2xl);
+            padding: var(--spacing-2xl);
+            margin-bottom: var(--spacing-2xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .recommendations-title {
+            font-size: calc(var(--font-size-2xl) - 2px);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-xl);
+            text-align: center;
+        }
+
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .recommendation-card {
+            background: var(--color-background-secondary);
+            border-radius: var(--border-radius-xl);
+            padding: var(--spacing-xl);
+            border: 1px solid var(--color-neutral-100);
+            text-align: left;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            column-gap: var(--spacing-sm);
+            align-items: center;
+        }
+
+        .recommendation-icon {
+            font-size: var(--font-size-xl);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+
+        .recommendation-title {
+            font-size: calc(var(--font-size-xl) - 2px);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            display: block;
+            align-self: center;
+            margin: 0 0 var(--spacing-sm) 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .recommendation-text {
+            font-size: var(--font-size-base);
+            color: var(--color-text-secondary);
+            line-height: var(--line-height-relaxed);
+            text-align: left;
+            grid-column: 1 / -1;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .action-button {
+            padding: var(--spacing-lg) var(--spacing-2xl);
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            border: none;
+            min-width: 200px;
+        }
+
+        .primary-button {
+            background: var(--color-primary-500);
+            color: var(--color-text-inverse);
+        }
+
+        .primary-button:hover {
+            background: var(--color-primary-600);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--color-primary-500);
+            border: 2px solid var(--color-primary-500);
+        }
+
+        .secondary-button:hover {
+            background: var(--color-primary-50);
+            border-color: var(--color-primary-600);
+        }
+
+        .calendar-section {
+            background: var(--color-background-primary);
+            border-radius: var(--border-radius-2xl);
+            padding: var(--spacing-2xl);
+            margin-top: var(--spacing-3xl);
+            margin-bottom: var(--spacing-2xl);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .calendar-title {
+            font-size: calc(var(--font-size-2xl) - 2px);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .calendar-description {
+            text-align: center;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: var(--spacing-sm);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius-md);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        .calendar-day.past {
+            background: var(--color-primary-100);
+            color: var(--color-primary-700);
+        }
+
+        .calendar-day.past:hover {
+            background: var(--color-primary-200);
+        }
+
+        .calendar-day.current {
+            background: var(--color-primary-500);
+            color: var(--color-text-inverse);
+        }
+
+        .calendar-day.future {
+            background: var(--color-neutral-100);
+            color: var(--color-neutral-400);
+            cursor: not-allowed;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .result-title h1 {
+                font-size: var(--font-size-3xl);
+            }
+
+            .score-gauge {
+                width: 150px;
+                height: 150px;
+            }
+
+            .score-number {
+                font-size: var(--font-size-4xl);
+            }
+
+            .recommendations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .action-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .result-container {
+                padding: var(--spacing-xl) var(--spacing-md);
+            }
+
+            .score-section,
+            .fortune-summary,
+            .recommendations-section,
+            .calendar-section {
+                padding: var(--spacing-lg);
+            }
+        }
+        /* Footer (from landing.html) */
+        .footer {
+            background: var(--color-background-primary);
+            border-top: 1px solid var(--color-neutral-200);
+            padding: var(--spacing-xl) 0;
+            margin-top: var(--spacing-4xl);
+        }
+
+        .footer-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .footer-link {
+            color: var(--color-primary-500);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: normal;
+            transition: var(--transition-normal);
+        }
+
+        .footer-link:hover {
+            color: var(--color-primary-600);
+        }
+
+        .footer-text {
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-sm);
+        }
+    </style>
+</head>
+<body>
+    <div class="result-page">
+        <!-- Header -->
+        <header class="result-header">
+            <div class="header-container">
+                <a href="landing.html" class="logo">
+                    <span class="logo-icon">🍀</span>
+                    오늘의 행운지수
+                </a>
+                <button class="back-button" onclick="goBack()">다시 보기</button>
+            </div>
+        </header>
+
+        <!-- Result Container -->
+        <div class="result-container">
+            <!-- Result Title -->
+            <div class="result-title">
+                <h1>민지님의 <br> 8월 27일 행운지수는?</h1>
+                <p>오늘의 점수를 확인해보세요</p>
+            </div>
+
+            <!-- Score Section -->
+            <div class="score-section">
+                <div class="score-gauge">
+                    <div class="gauge-circle">
+                        <div class="gauge-inner">
+                            <div class="score-number">87</div>
+                            <div class="score-label">점</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="score-message">오늘, 기운이 꽤 좋은 날이에요!</div>
+            </div>
+
+            <!-- Fortune Summary -->
+            <div class="fortune-summary">
+                <h2 class="summary-title">📄 오늘의 운세 요약</h2>
+                <p class="summary-text">
+                    마음이 안정되고 주변과의 관계가 부드러워지는 날이에요.<br>
+                    중요한 일은 오전에 처리하면 더 잘 풀릴 수 있어요.
+                </p>
+            </div>
+
+            <!-- Recommendations -->
+            <div class="recommendations-section">
+                <h2 class="recommendations-title">💡 행운을 높이는 오늘의 비법</h2>
+                <div class="recommendations-grid">
+                    <div class="recommendation-card">
+                        <div class="recommendation-icon">👚</div>
+                        <h3 class="recommendation-title">의상</h3>
+                        <p class="recommendation-text">
+                            초록색 셔츠나 아우터가 오늘의 기운을 끌어올려줘요.
+                        </p>
+                    </div>
+                    <div class="recommendation-card">
+                        <div class="recommendation-icon">🍱</div>
+                        <h3 class="recommendation-title">음식</h3>
+                        <p class="recommendation-text">
+                            점심엔 미역국이나 시금치나물을 드셔 보세요. 부족한 수(水)를 보완해줘요.
+                        </p>
+                    </div>
+                    <div class="recommendation-card">
+                        <div class="recommendation-icon">🏃</div>
+                        <h3 class="recommendation-title">활동</h3>
+                        <p class="recommendation-text">
+                            가벼운 산책이나 식물에 물 주기 같은 자연 활동이 도움이 돼요.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-button primary-button" onclick="goShareCard()">
+                    행운지수 저장/공유
+                </button>
+                <button class="action-button secondary-button" onclick="goBack()">
+                    다시 보기
+                </button>
+            </div>
+
+            <!-- Calendar Section -->
+            <div class="calendar-section">
+                <h2 class="calendar-title">과거의 행운지수도 살펴볼까요?</h2>
+                <p class="calendar-description">
+                    날짜를 눌러 이전 운세도 확인해보세요.
+                </p>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendar days will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-links">
+                    <a href="about.html" class="footer-link">개인정보처리방침</a>
+                </div>
+                <div class="footer-text">Copyright © 2025 오늘의 행운지수. All rights reserved.</div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Load form data from localStorage
+        const formData = JSON.parse(localStorage.getItem('luckFormData') || '{}');
+        
+        // Update page title with user's name and preserve line break
+        if (formData.name) {
+            const dateStr = new Date().toLocaleDateString('ko-KR', { month: 'long', day: 'numeric' });
+            document.querySelector('.result-title h1').innerHTML = 
+                `${formData.name}님의 <br> ${dateStr} 행운지수는?`;
+        }
+
+        // Generate calendar
+        function generateCalendar() {
+            const calendarGrid = document.getElementById('calendarGrid');
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+            
+            // Get first day of month and number of days
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startDay = firstDay.getDay();
+            
+            // Clear existing content
+            calendarGrid.innerHTML = '';
+            
+            // Add day headers
+            const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+            dayNames.forEach(day => {
+                const dayHeader = document.createElement('div');
+                dayHeader.className = 'calendar-day';
+                dayHeader.textContent = day;
+                dayHeader.style.fontWeight = 'bold';
+                dayHeader.style.color = 'var(--color-text-secondary)';
+                calendarGrid.appendChild(dayHeader);
+            });
+            
+            // Add empty cells for days before month starts
+            for (let i = 0; i < startDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day';
+                calendarGrid.appendChild(emptyDay);
+            }
+            
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                
+                const currentDate = new Date(currentYear, currentMonth, day);
+                
+                if (currentDate < today) {
+                    dayElement.classList.add('past');
+                    dayElement.addEventListener('click', () => {
+                        alert('과거 운세는 준비 중입니다!');
+                    });
+                } else if (currentDate.getDate() === today.getDate()) {
+                    dayElement.classList.add('current');
+                } else {
+                    dayElement.classList.add('future');
+                    dayElement.addEventListener('click', () => {
+                        alert('미래의 행운지수는 아직 볼 수 없어요!');
+                    });
+                }
+                
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        // Share functionality
+        function shareResult() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '오늘의 행운지수',
+                    text: `${formData.name || '나'}의 오늘 행운지수는 87점입니다!`,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const url = window.location.href;
+                const text = `${formData.name || '나'}의 오늘 행운지수는 87점입니다!`;
+                
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
+                        alert('결과가 클립보드에 복사되었습니다!');
+                    });
+                } else {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = `${text}\n${url}`;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    alert('결과가 클립보드에 복사되었습니다!');
+                }
+            }
+        }
+
+        // Go back function
+        function goBack() {
+            window.location.href = 'landing.html';
+        }
+
+        function goShareCard() {
+            window.location.href = 'share-card.html';
+        }
+
+        // Initialize calendar
+        generateCalendar();
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                goBack();
+            }
+        });
+    </script>
+</body>
+</html> 

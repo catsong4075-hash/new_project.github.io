@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오늘의 행운지수 - 나만의 행운 점수 확인하기</title>
+    <meta name="description" content="사주를 기반으로 나만의 행운 점수와 행운 강화법을 알려드려요. 매일 1분, 나를 위한 재미있는 루틴을 만들어보세요.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="../../styles/variables.css">
+    <link rel="stylesheet" href="../../styles/global.css">
+    
+    <style>
+        /* Enhanced Landing Page Specific Styles */
+        .landing-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-background-secondary) 100%);
+            font-family: var(--font-family-primary);
+        }
+
+        .landing-header {
+            background: var(--color-background-primary);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: var(--spacing-md) var(--spacing-lg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-primary-600);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .logo-icon {
+            font-size: var(--font-size-lg);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            align-items: center;
+        }
+
+        .share-button {
+            background: transparent;
+            color: var(--color-primary-500);
+            border: 2px solid var(--color-primary-500);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: var(--transition-normal);
+        }
+
+        .share-button:hover {
+            background: var(--color-primary-50);
+            border-color: var(--color-primary-600);
+        }
+
+        .share-tooltip {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            background: var(--color-neutral-800);
+            color: var(--color-text-inverse);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            font-size: var(--font-size-xs);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-normal);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .share-button:hover .share-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .hero-section {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-lg);
+            text-align: center;
+        }
+
+        .hero-icon {
+            font-size: var(--font-size-6xl);
+            margin-bottom: var(--spacing-lg);
+            display: block;
+        }
+
+        .hero-title {
+            font-size: var(--font-size-5xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-lg);
+            line-height: var(--line-height-tight);
+            background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-secondary-600) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: var(--font-size-lg);
+            color: #000;
+            margin-bottom: calc(var(--spacing-xl) * 0.6667);
+            line-height: var(--line-height-relaxed);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-section {
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--color-background-primary);
+            padding: var(--spacing-2xl);
+            border-radius: var(--border-radius-2xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--color-neutral-100);
+        }
+
+        .form-title {
+            font-size: calc(var(--font-size-2xl) * 0.6667 + 1px);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+        }
+
+        .form-description {
+            color: var(--color-text-secondary);
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.4;
+            font-weight: normal;
+            font-size: calc(var(--font-size-base) - 2px);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        /* Inline input + control row */
+        .input-row {
+            display: flex;
+            align-items: stretch;
+            gap: var(--spacing-sm);
+        }
+        .input-row .form-input { flex: 1; }
+        .input-row .time-input-wrapper { flex: 1; }
+
+        /* Segmented control (남/여, 양력/음력) */
+        .segmented {
+            display: inline-flex;
+            align-items: stretch;
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            background: var(--color-background-primary);
+            white-space: nowrap;
+            height: auto; /* will stretch to match input height via flex */
+        }
+        /* Only the gender segmented control width is controlled to match calendar's width */
+        .segmented[aria-label="성별 선택"] {
+            width: var(--gender-segmented-width, auto);
+            flex: 0 0 var(--gender-segmented-width, auto);
+        }
+        .segmented input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+            width: 0;
+            height: 0;
+        }
+        .segmented label {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 0 var(--spacing-xs);
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+        .segmented label:not(:first-child) {
+            border-left: none;
+            border-radius: var(--border-radius-md);
+        }
+        .segmented input[type="radio"]:checked + label {
+            background: var(--color-primary-50);
+            color: var(--color-primary-700);
+            font-weight: var(--font-weight-medium);
+        }
+        .segmented input[type="radio"]:focus + label {
+            box-shadow: 0 0 0 3px var(--color-primary-100);
+        }
+
+        /* Make the two gender buttons equal width */
+        .segmented[aria-label="성별 선택"] label {
+            flex: 1 1 0;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        /* Inline checkbox variant next to input */
+        .checkbox-group.inline {
+            margin-top: 0;
+            /* Make unknownTime area behave like the segmented control column */
+            flex: 0 0 var(--unknown-control-width, auto);
+            height: auto; /* center-align instead of stretching */
+            padding: 0 var(--spacing-xs);
+            border: none; /* hide border per design */
+            border-radius: 0;
+            background: transparent;
+            box-sizing: border-box;
+            align-self: center; /* vertically center within the row */
+        }
+
+        .form-label {
+            display: block;
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--border-radius-md);
+            font-size: var(--font-size-base);
+            font-family: var(--font-family-primary);
+            transition: var(--transition-normal);
+            box-sizing: border-box;
+            background: var(--color-background-primary);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-primary-500);
+            box-shadow: 0 0 0 3px var(--color-primary-100);
+        }
+
+        .form-input.error {
+            border-color: var(--color-error-500);
+            box-shadow: 0 0 0 3px var(--color-error-100);
+        }
+
+        .form-input.success {
+            border-color: var(--color-success-500);
+            box-shadow: 0 0 0 3px var(--color-success-100);
+        }
+
+        .form-input:disabled {
+            background: var(--color-neutral-100);
+            color: var(--color-neutral-500);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .form-input:disabled:focus {
+            border-color: var(--color-neutral-300);
+            box-shadow: none;
+        }
+
+        /* Custom time input and picker */
+        .time-input-wrapper {
+            position: relative;
+        }
+
+        /* Hide native time picker icon (WebKit) */
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            display: none;
+        }
+
+        /* Provide space for custom button */
+        .time-input-wrapper .form-input {
+            padding-right: 44px;
+        }
+
+        .time-picker-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--color-neutral-600);
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .time-picker-button:hover {
+            color: var(--color-neutral-700);
+        }
+
+        .time-picker-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .time-picker-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .time-picker-dialog {
+            background: var(--color-background-primary);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--color-neutral-200);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-lg);
+            width: 320px;
+        }
+
+        .time-picker-header {
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-primary);
+        }
+
+        .time-picker-fields {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .time-picker-select {
+            flex: 1;
+            padding: var(--spacing-sm);
+            border: 2px solid var(--color-neutral-200);
+            border-radius: var(--border-radius-md);
+            font-size: var(--font-size-base);
+            background: var(--color-background-primary);
+        }
+
+        .time-picker-actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-sm);
+        }
+
+        /* Expand and center action buttons */
+        .time-picker-actions .btn {
+            flex: 1;
+            min-width: 0;
+            min-height: 44px;
+            padding: 12px 16px;
+            font-size: var(--font-size-base);
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: var(--border-radius-md);
+            border: 1px solid var(--color-neutral-300);
+            background: var(--color-background-primary);
+            color: var(--color-text-primary);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+        }
+
+        .btn-primary {
+            border-color: var(--color-primary-500);
+            color: var(--color-primary-600);
+        }
+
+        .error-message {
+            color: var(--color-error-600);
+            font-size: var(--font-size-sm);
+            margin-top: var(--spacing-xs);
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+            cursor: pointer;
+        }
+
+        .checkbox-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .checkbox-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            cursor: pointer;
+            height: auto; /* allow natural height, centered by parent */
+            justify-content: center;
+        }
+
+        .checkbox-custom {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--color-neutral-300);
+            border-radius: 3px;
+            background: var(--color-background-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-normal);
+            flex-shrink: 0;
+        }
+
+        .checkbox-input:checked + .checkbox-label .checkbox-custom {
+            background: var(--color-primary-500);
+            border-color: var(--color-primary-500);
+        }
+
+        .checkbox-input:checked + .checkbox-label .checkbox-custom::after {
+            content: '✓';
+            color: var(--color-text-inverse);
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-input:focus + .checkbox-label .checkbox-custom {
+            box-shadow: 0 0 0 3px var(--color-primary-100);
+        }
+
+        .submit-button {
+            background: var(--color-primary-500);
+            color: var(--color-text-inverse);
+            border: none;
+            padding: var(--spacing-lg) var(--spacing-xl);
+            border-radius: var(--border-radius-lg);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            cursor: pointer;
+            transition: var(--transition-normal);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            text-align: center;
+            margin-top: var(--spacing-lg);
+            min-height: 56px;
+        }
+
+        .submit-button:hover {
+            background: var(--color-primary-600);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .submit-button:active {
+            background: var(--color-primary-700);
+            transform: translateY(0);
+        }
+
+        .submit-button:disabled {
+            background: var(--color-neutral-300);
+            color: var(--color-neutral-500);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .submit-button .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-text-inverse);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin-right: var(--spacing-sm);
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .features-preview {
+            margin-top: var(--spacing-3xl);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature-preview {
+            background: var(--color-background-primary);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            border: 1px solid var(--color-neutral-100);
+            transition: var(--transition-normal);
+        }
+
+        .feature-preview:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-preview-icon {
+            font-size: var(--font-size-3xl);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .feature-preview-title {
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .feature-preview-text {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            line-height: var(--line-height-relaxed);
+        }
+
+        .footer {
+            background: var(--color-background-primary);
+            border-top: 1px solid var(--color-neutral-200);
+            padding: var(--spacing-xl) 0;
+            margin-top: var(--spacing-4xl);
+        }
+
+        .footer-container {
+            max-width: var(--container-max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .footer-link {
+            color: var(--color-primary-500);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            font-weight: normal;
+            transition: var(--transition-normal);
+        }
+
+        .footer-link:hover {
+            color: var(--color-primary-600);
+        }
+
+        .footer-text {
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: var(--font-size-4xl);
+            }
+
+            .hero-subtitle {
+                font-size: var(--font-size-base);
+            }
+
+            .form-description {
+                font-size: calc(var(--font-size-base) - 2px);
+            }
+
+            
+
+            .form-section {
+                margin: 0 var(--spacing-lg);
+                padding: var(--spacing-xl);
+            }
+
+            .header-container {
+                padding: var(--spacing-sm) var(--spacing-lg);
+            }
+
+            .features-preview {
+                grid-template-columns: 1fr;
+                margin: var(--spacing-2xl) var(--spacing-lg) 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: var(--font-size-3xl);
+            }
+
+            .hero-subtitle {
+                font-size: var(--font-size-sm);
+            }
+            .form-description {
+                font-size: calc(var(--font-size-sm) - 2px);
+            }
+
+            .form-section {
+                margin: 0 var(--spacing-md);
+                padding: var(--spacing-lg);
+            }
+
+            .header-actions {
+                gap: var(--spacing-sm);
+            }
+
+
+            .footer-links {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+        }
+
+        /* Landing-specific header/button sizing: keep header height, set share button to 40px */
+        .header .header-container {
+            padding: var(--spacing-md) var(--spacing-lg);
+        }
+
+        #shareButton {
+            height: 40px;
+            min-height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-page">
+        <!-- Header -->
+        <header class="landing-header header">
+            <div class="header-container">
+                <a href="landing.html" class="logo">
+                    <span class="logo-icon">🍀</span>
+                    오늘의 행운지수
+                </a>
+                <div class="header-actions">
+                    <button class="share-button" id="shareButton">
+                        <span>📤</span>
+                        공유하기
+                        <div class="share-tooltip">친구에게도 오늘의 행운을 전해보세요!</div>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-icon">🍀</div>
+            <h1 class="hero-title">오늘, 나의 행운지수는<br>몇 점일까?</h1>
+            <p class="hero-subtitle">
+                사주를 바탕으로 나의 행운 점수와 행운 강화법을 알려드려요.<br>
+                매일 1분, 나를 위한 재미있는 루틴을 만들어보세요.
+            </p>
+        </section>
+
+        <!-- Form Section -->
+        <section class="form-section">
+            <h2 class="form-title">📈 행운지수 확인하기</h2>
+            <p class="form-description">
+                정확한 생년월일과 시간을 입력해주세요.<br>
+                태어난 시간을 모를 경우 '모름'에 체크해주세요.
+            </p>
+
+            <form id="luckForm" novalidate>
+                <div class="form-group">
+                    <label for="name" class="form-label">이름(별명)</label>
+                    <div class="input-row">
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            class="form-input" 
+                            placeholder="이름 또는 별명을 입력해주세요"
+                            required
+                        >
+                        <div class="segmented" role="radiogroup" aria-label="성별 선택">
+                            <input type="radio" name="gender" id="genderMale" value="male" checked>
+                            <label for="genderMale">남</label>
+                            <input type="radio" name="gender" id="genderFemale" value="female">
+                            <label for="genderFemale">여</label>
+                        </div>
+                    </div>
+                    <div class="error-message" id="nameError">이름 또는 별명을 입력해주세요.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="birthDate" class="form-label">생년월일</label>
+                    <div class="input-row">
+                        <input 
+                            type="date" 
+                            id="birthDate" 
+                            name="birthDate" 
+                            class="form-input" 
+                            required
+                        >
+                        <div class="segmented" role="radiogroup" aria-label="달력 유형 선택">
+                            <input type="radio" name="calendarType" id="calSolar" value="solar" checked>
+                            <label for="calSolar">양력</label>
+                            <input type="radio" name="calendarType" id="calLunar" value="lunar">
+                            <label for="calLunar">음력</label>
+                        </div>
+                    </div>
+                    <div class="error-message" id="birthDateError">생년월일을 입력해주세요.</div>
+                    <div class="error-message" id="ageError" style="display:none;">만 14세 미만 아동은 이용을 제한합니다.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="birthTime" class="form-label">태어난 시간</label>
+                    <div class="input-row">
+                        <div class="time-input-wrapper">
+                            <input 
+                                type="text"
+                                inputmode="numeric"
+                                pattern="^([01][0-9]|2[0-3]):[0-5][0-9]$"
+                                placeholder="00:00"
+                                id="birthTime" 
+                                name="birthTime" 
+                                class="form-input"
+                                aria-label="태어난 시간 24시간 형식, 예: 09:05 또는 18:30"
+                            >
+                            <button type="button" class="time-picker-button" id="openTimePicker" aria-label="시간 선택">🕒</button>
+                        </div>
+                        <div class="checkbox-group inline">
+                            <input type="checkbox" id="unknownTime" name="unknownTime" class="checkbox-input">
+                            <label for="unknownTime" class="checkbox-label">
+                                모름
+                                <span class="checkbox-custom"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- 개인정보 수집·이용 동의 체크박스 및 팝업 -->
+                <div class="form-group" id="privacyConsentGroup" style="margin-bottom: var(--spacing-lg);">
+                    <div class="checkbox-group" style="align-items: center;">
+                        <input type="checkbox" id="privacyConsent" name="privacyConsent" class="checkbox-input">
+                        <label for="privacyConsent" class="checkbox-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <span class="checkbox-custom"></span>
+                            개인정보 수집·이용에 동의합니다.
+                        </label>
+                        <button type="button" id="privacyChevron" aria-label="개인정보 수집·이용 동의 내용 보기" style="background: none; border: none; margin-left: 8px; cursor: pointer; font-size: 18px; color: var(--color-primary-500); display: flex; align-items: center; padding: 8px 20px;">
+                            <span style="font-size: 20px;">&#8250;</span>
+                        </button>
+                    </div>
+                    <div class="error-message" id="privacyConsentError">개인정보 수집·이용에 동의해야 합니다.</div>
+                </div>
+                <!-- 개인정보 수집·이용 동의 레이어팝업 -->
+                <div id="privacyLayer" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); z-index:2000; align-items:center; justify-content:center;">
+                    <div style="background:#fff; border-radius:16px; max-width:400px; width:90vw; padding:32px 24px 24px 24px; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.18);">
+                        <button id="closePrivacyLayer" aria-label="닫기" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:22px; color:#888; cursor:pointer;">&times;</button>
+                        <h2 style="font-size:20px; margin:0 0 16px 0; color:#222;">개인정보 수집·이용 동의</h2>
+                        <div style="font-size:15px; color:#333; line-height:1.6; max-height:50vh; overflow-y:auto;">
+                            본 서비스는 이름(또는 별명), 생년월일, 성별, 태어난 시간 등 최소한의 정보를 수집하며, 해당 정보는 행운지수 산출 및 서비스 제공 목적에만 이용됩니다.<br><br>
+                            수집된 정보는 이용자의 기기에만 저장되며, 서버에는 별도로 저장되지 않습니다. <br>
+                            따라서 회사의 개인정보 보유기간은 존재하지 않습니다(보유하지 않음).<br><br>
+                            귀하는 개인정보 수집·이용에 동의하지 않을 권리가 있으며, 동의를 거부하실 경우 서비스 이용이 제한될 수 있습니다.<br><br>
+                            자세한 내용은 개인정보 처리방침을 참고해 주세요.
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="submit-button" id="submitButton">
+                    <span class="loading-spinner" id="loadingSpinner"></span>
+                    오늘의 행운지수 확인하기
+                </button>
+            </form>
+        </section>
+
+        <!-- Features Preview -->
+        <section class="features-preview">
+            <div class="feature-preview">
+                <div class="feature-preview-icon">🌟</div>
+                <h3 class="feature-preview-title">사주 기반 분석</h3>
+                <p class="feature-preview-text">사주를 기반으로 분석한 오늘의 행운점수를 알려줘요.</p>
+            </div>
+            <div class="feature-preview">
+                <div class="feature-preview-icon">🎯</div>
+                <h3 class="feature-preview-title">실천 가능한 조언</h3>
+                <p class="feature-preview-text">오늘 바로 실천할 수 있는 구체적인 행운 강화법을 제안해요.</p>
+            </div>
+            <div class="feature-preview">
+                <div class="feature-preview-icon">📱</div>
+                <h3 class="feature-preview-title">쉬운 공유</h3>
+                <p class="feature-preview-text">친구에게 공유할 수 있도록 오늘의 행운점수를 카드로 제공해요.</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-container">
+                <div class="footer-links">
+                    <a href="about.html" class="footer-link">개인정보처리방침</a>
+                </div>
+                <div class="footer-text">Copyright © 2025 오늘의 행운지수. All rights reserved.</div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Form validation and submission
+        const form = document.getElementById('luckForm');
+        const nameInput = document.getElementById('name');
+        const birthDateInput = document.getElementById('birthDate');
+        const birthTimeInput = document.getElementById('birthTime');
+        const unknownTimeCheckbox = document.getElementById('unknownTime');
+        const submitButton = document.getElementById('submitButton');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const shareButton = document.getElementById('shareButton');
+
+        // Error elements
+        const nameError = document.getElementById('nameError');
+        const birthDateError = document.getElementById('birthDateError');
+        const privacyConsent = document.getElementById('privacyConsent');
+        const privacyConsentError = document.getElementById('privacyConsentError');
+        const ageError = document.getElementById('ageError');
+
+        // Prefill birth date with today's date if empty (local timezone)
+        (function setDefaultBirthDateToToday() {
+            if (!birthDateInput.value) {
+                const today = new Date();
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+                birthDateInput.value = `${year}-${month}-${day}`;
+            }
+        })();
+
+        // Handle unknown time checkbox
+        unknownTimeCheckbox.addEventListener('change', function() {
+            birthTimeInput.disabled = this.checked;
+            if (this.checked) {
+                birthTimeInput.value = '';
+                birthTimeInput.classList.remove('success', 'error');
+            } else {
+                birthTimeInput.classList.remove('success', 'error');
+            }
+        });
+
+        // Real-time validation with visual feedback
+        function validateField(input, errorElement, errorMessage) {
+            const isValid = input.value.trim() !== '';
+            
+            if (!isValid) {
+                input.classList.add('error');
+                input.classList.remove('success');
+                errorElement.textContent = errorMessage;
+                errorElement.classList.add('show');
+            } else {
+                input.classList.remove('error');
+                input.classList.add('success');
+                errorElement.classList.remove('show');
+            }
+            
+            return isValid;
+        }
+
+        // Validate on input
+        nameInput.addEventListener('input', () => {
+            validateField(nameInput, nameError, '이름 또는 별명을 입력해주세요.');
+        });
+
+        birthDateInput.addEventListener('input', () => {
+            validateField(birthDateInput, birthDateError, '생년월일을 입력해주세요.');
+        });
+
+        function validateConsent() {
+            if (!privacyConsent.checked) {
+                privacyConsentError.classList.add('show');
+                return false;
+            } else {
+                privacyConsentError.classList.remove('show');
+                return true;
+            }
+        }
+
+        function isUnder14(birthDateStr) {
+            if (!birthDateStr) return false;
+            const today = new Date();
+            const birth = new Date(birthDateStr);
+            const age = today.getFullYear() - birth.getFullYear();
+            const m = today.getMonth() - birth.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+                return age - 1 < 14;
+            }
+            return age < 14;
+        }
+
+        privacyConsent.addEventListener('change', function() {
+            validateConsent();
+        });
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const isNameValid = validateField(nameInput, nameError, '이름 또는 별명을 입력해주세요.');
+            const isBirthDateValid = validateField(birthDateInput, birthDateError, '생년월일을 입력해주세요.');
+            const isConsentValid = validateConsent();
+            let isAgeValid = true;
+            ageError.style.display = 'none';
+            if (isBirthDateValid && isUnder14(birthDateInput.value)) {
+                ageError.style.display = 'block';
+                isAgeValid = false;
+            }
+            
+            if (isNameValid && isBirthDateValid && isConsentValid && isAgeValid) {
+                // Show loading state
+                submitButton.disabled = true;
+                loadingSpinner.style.display = 'inline-block';
+                submitButton.textContent = '행운지수 계산 중...';
+                
+                // Simulate API call
+                setTimeout(() => {
+                    // Store form data in localStorage for result page
+                    const formData = {
+                        name: nameInput.value,
+                        birthDate: birthDateInput.value,
+                        birthTime: unknownTimeCheckbox.checked ? null : birthTimeInput.value,
+                        unknownTime: unknownTimeCheckbox.checked
+                    };
+                    
+                    localStorage.setItem('luckFormData', JSON.stringify(formData));
+                    
+                    // Navigate to result page
+                    window.location.href = 'result.html';
+                }, 2000);
+            } else {
+                e.preventDefault();
+                submitButton.disabled = false;
+                loadingSpinner.style.display = 'none';
+                submitButton.textContent = '오늘의 행운지수 확인하기';
+            }
+        });
+
+        // Share functionality
+        shareButton.addEventListener('click', function() {
+            if (navigator.share) {
+                navigator.share({
+                    title: '오늘의 행운지수',
+                    text: '나만의 행운 점수와 행운 강화법을 확인해보세요!',
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const url = window.location.href;
+                const text = '나만의 행운 점수와 행운 강화법을 확인해보세요!';
+                
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(`${text}\n${url}`).then(() => {
+                        showSnackbar('링크가 클립보드에 복사되었습니다!');
+                    });
+                } else {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = `${text}\n${url}`;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    showSnackbar('링크가 클립보드에 복사되었습니다!');
+                }
+            }
+        });
+
+        // Show snackbar
+        function showSnackbar(message) {
+            // Create snackbar if it doesn't exist
+            let snackbar = document.getElementById('snackbar');
+            if (!snackbar) {
+                snackbar = document.createElement('div');
+                snackbar.id = 'snackbar';
+                snackbar.style.cssText = `
+                    position: fixed;
+                    bottom: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--color-neutral-800);
+                    color: var(--color-text-inverse);
+                    padding: var(--spacing-md) var(--spacing-lg);
+                    border-radius: var(--border-radius-lg);
+                    font-size: var(--font-size-base);
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: var(--transition-normal);
+                    z-index: 1000;
+                `;
+                document.body.appendChild(snackbar);
+            }
+            
+            snackbar.textContent = message;
+            snackbar.style.opacity = '1';
+            snackbar.style.visibility = 'visible';
+            
+            setTimeout(() => {
+                snackbar.style.opacity = '0';
+                snackbar.style.visibility = 'hidden';
+            }, 3000);
+        }
+
+        // Accessibility improvements
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.activeElement === unknownTimeCheckbox) {
+                e.preventDefault();
+                unknownTimeCheckbox.checked = !unknownTimeCheckbox.checked;
+                unknownTimeCheckbox.dispatchEvent(new Event('change'));
+            }
+        });
+
+        // Focus management for better UX
+        nameInput.focus();
+
+        // Add smooth scroll for better UX
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Match gender segmented width to calendar segmented width (on load and resize)
+        (function syncControlWidths() {
+            const genderSeg = document.querySelector('.segmented[aria-label="성별 선택"]');
+            const calendarSeg = document.querySelector('.segmented[aria-label="달력 유형 선택"]');
+            const unknownGroup = document.querySelector('.checkbox-group.inline');
+            if (!genderSeg || !calendarSeg) return;
+
+            function applyWidth() {
+                // Reset any inline style to get the natural calendar width
+                calendarSeg.style.width = '';
+                calendarSeg.style.flexBasis = '';
+                const width = calendarSeg.getBoundingClientRect().width;
+                genderSeg.style.width = `${width}px`;
+                genderSeg.style.flexBasis = `${width}px`;
+                if (unknownGroup) {
+                    // Set unknown control width to match gender/calendar side width
+                    unknownGroup.style.setProperty('--unknown-control-width', `${width}px`);
+                }
+            }
+
+            // Initial
+            applyWidth();
+            // On window resize for responsiveness
+            window.addEventListener('resize', () => {
+                // Debounce with rAF
+                window.requestAnimationFrame(applyWidth);
+            });
+        })();
+
+        // Custom 24h time picker (00:00 ~ 23:59)
+        (function setupCustomTimePicker() {
+            const overlayId = 'timePickerOverlay';
+            let overlay = document.getElementById(overlayId);
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = overlayId;
+                overlay.className = 'time-picker-overlay';
+                overlay.innerHTML = `
+                    <div class="time-picker-dialog" role="dialog" aria-modal="true" aria-labelledby="timePickerTitle">
+                        <div class="time-picker-header" id="timePickerTitle">시간 선택 (24시간)</div>
+                        <div class="time-picker-fields">
+                            <select class="time-picker-select" id="pickerHour" aria-label="시간">
+                                ${Array.from({ length: 24 }, (_, h) => `<option value="${String(h).padStart(2,'0')}">${String(h).padStart(2,'0')}</option>`).join('')}
+                            </select>
+                            <select class="time-picker-select" id="pickerMinute" aria-label="분">
+                                ${Array.from({ length: 60 }, (_, m) => `<option value="${String(m).padStart(2,'0')}">${String(m).padStart(2,'0')}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="time-picker-actions">
+                            <button type="button" class="btn" id="cancelTimePicker">취소</button>
+                            <button type="button" class="btn btn-primary" id="confirmTimePicker">확인</button>
+                        </div>
+                    </div>`;
+                document.body.appendChild(overlay);
+            }
+
+            const openBtn = document.getElementById('openTimePicker');
+            const hourSel = overlay.querySelector('#pickerHour');
+            const minSel = overlay.querySelector('#pickerMinute');
+            const cancelBtn = overlay.querySelector('#cancelTimePicker');
+            const confirmBtn = overlay.querySelector('#confirmTimePicker');
+
+            function openDialogFromCurrent() {
+                const current = birthTimeInput.value || '00:00';
+                const [h, m] = current.split(':');
+                hourSel.value = h.padStart(2, '0');
+                minSel.value = m.padStart(2, '0');
+                overlay.style.display = 'flex';
+            }
+
+            function closeDialog() {
+                overlay.style.display = 'none';
+            }
+
+            openBtn.addEventListener('click', () => {
+                if (birthTimeInput.disabled) return;
+                openDialogFromCurrent();
+            });
+
+            cancelBtn.addEventListener('click', closeDialog);
+
+            confirmBtn.addEventListener('click', () => {
+                const selected = `${hourSel.value}:${minSel.value}`;
+                birthTimeInput.value = selected;
+                closeDialog();
+            });
+
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) closeDialog();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (overlay.style.display === 'flex' && e.key === 'Escape') closeDialog();
+            });
+
+            // Sync disabled state of button with input
+            const syncTimePickerButtonState = () => {
+                openBtn.disabled = birthTimeInput.disabled;
+            };
+            syncTimePickerButtonState();
+            unknownTimeCheckbox.addEventListener('change', syncTimePickerButtonState);
+        })();
+
+        // Enforce 24h time format (HH:MM) on manual input
+        (function enforce24hTimeFormat() {
+            const TIME_24H_REGEX = /^([01][0-9]|2[0-3]):[0-5][0-9]$/;
+            birthTimeInput.addEventListener('blur', () => {
+                const v = birthTimeInput.value.trim();
+                if (v === '') return;
+                if (!TIME_24H_REGEX.test(v)) {
+                    // Try to normalize common variants, else show error style
+                    const cleaned = v.replace(/[^0-9:]/g, '');
+                    const m = cleaned.match(/^(\d{1,2}):(\d{1,2})$/);
+                    if (m) {
+                        let hh = Math.min(23, Math.max(0, parseInt(m[1], 10)));
+                        let mm = Math.min(59, Math.max(0, parseInt(m[2], 10)));
+                        birthTimeInput.value = `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
+                        birthTimeInput.classList.remove('error');
+                        birthTimeInput.classList.add('success');
+                    } else {
+                        birthTimeInput.classList.add('error');
+                    }
+                } else {
+                    birthTimeInput.classList.remove('error');
+                    birthTimeInput.classList.add('success');
+                }
+            });
+        })();
+
+        // JS for privacy popup
+        const privacyChevron = document.getElementById('privacyChevron');
+        const privacyLayer = document.getElementById('privacyLayer');
+        const closePrivacyLayer = document.getElementById('closePrivacyLayer');
+        if (privacyChevron && privacyLayer && closePrivacyLayer) {
+            privacyChevron.addEventListener('click', function() {
+                privacyLayer.style.display = 'flex';
+            });
+            closePrivacyLayer.addEventListener('click', function() {
+                privacyLayer.style.display = 'none';
+            });
+            privacyLayer.addEventListener('click', function(e) {
+                if (e.target === privacyLayer) {
+                    privacyLayer.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html> 
